@@ -7,7 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Data" />
+      <PackageReference Include="HotChocolate.AspNetCore" Version="12.12.1" />
+      <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.12.1" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Application\Application.csproj" />
     </ItemGroup>
 
 </Project>

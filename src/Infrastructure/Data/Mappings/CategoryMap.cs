@@ -10,6 +10,6 @@ public class CategoryMap: IEntityTypeConfiguration<Category>
     {
         builder.HasKey(e => e.CategoryID);
         builder.Property(e => e.Description).HasColumnName("Description");
-        builder.Property(e => e.Description).HasColumnType("varchar(100)");
+        builder.Property(e => e.Description).HasColumnType("text");
     }
 }

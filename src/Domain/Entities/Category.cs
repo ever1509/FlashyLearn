@@ -7,7 +7,7 @@ public class Category
         FlashCards = new HashSet<FlashCard>();
     }
     public Guid CategoryID { get; set; }
-    public string Description { get; set; }
+    public string Name { get; set; }
 
     public virtual ICollection<FlashCard> FlashCards { get; set; }
 }

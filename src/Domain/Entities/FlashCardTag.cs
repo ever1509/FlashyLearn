@@ -2,6 +2,8 @@ namespace Domain.Entities;
 
 public class FlashCardTag
 {
-    public int FlashCardID { get; set; }
-    public int TagID { get; set; }
+    public Guid FlashCardID { get; set; }
+    public virtual FlashCard FlashCard { get; set; }
+    public Guid TagID { get; set; }
+    public virtual Tag Tag { get; set; }
 }

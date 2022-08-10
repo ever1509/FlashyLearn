@@ -19,6 +19,9 @@
 
     <ItemGroup>
       <Folder Include="Categories\Queries" />
+      <Folder Include="FlashCards\Commands\DeleteFlashCard" />
+      <Folder Include="FlashCards\Commands\UpdateFlashCard" />
+      <Folder Include="FlashCards\Queries" />
     </ItemGroup>
 
 </Project>

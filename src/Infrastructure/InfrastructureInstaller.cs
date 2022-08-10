@@ -1,3 +1,4 @@
+using Application.Common.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,7 @@ public static class InfrastructureInstaller
 
         //services.AddScoped<IFluent>(provider => provider.GetRequiredService<FlashyLearnContext>());
 
-        services.AddScoped<FlashyLearnContext>(
+        services.AddScoped<IFlashyLearnContext>(
             sp => sp.GetRequiredService<IDbContextFactory<FlashyLearnContext>>()
                 .CreateDbContext());
 

@@ -7,6 +7,11 @@ namespace Infrastructure.Data;
 
 public class FlashyLearnContext: DbContext, IFlashyLearnContext
 {
+    public FlashyLearnContext(DbContextOptions<FlashyLearnContext> options) : base(options)
+    {
+
+    }
+
     public DbSet<FlashCard> FlashCards { get; }
     public DbSet<Category> Category { get; }
     public DbSet<Frequency> Frequencies { get; }

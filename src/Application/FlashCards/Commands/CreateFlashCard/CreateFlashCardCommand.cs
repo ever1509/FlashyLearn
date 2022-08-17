@@ -24,6 +24,7 @@ public class CreateFlashCardCommandHandler : IRequestHandler<CreateFlashCardComm
     {
         var newFlashCard = new FlashCard()
         {
+            FlashCardID = Guid.NewGuid(),
             BackText = request.BackText,
             FrontText = request.FrontText,
             CategoryID = Guid.Parse(request.CategoryID),

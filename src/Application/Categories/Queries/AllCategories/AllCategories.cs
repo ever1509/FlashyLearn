@@ -8,6 +8,7 @@ namespace Application.Categories.Queries.AllCategories;
 public class AllCategories : IRequest<List<CategoryDto>>
 {
     public int Page { get; set; } = 1;
+    public string? UserId { get; set; } = null;
 }
 
 public class AllCategoriesHandler : IRequestHandler<AllCategories, List<CategoryDto>>

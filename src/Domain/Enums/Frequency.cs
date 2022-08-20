@@ -1,6 +1,6 @@
 namespace Domain.Enums;
 
-public enum TimeType
+public enum Frequency
 {
     Daily,
     Weekly,

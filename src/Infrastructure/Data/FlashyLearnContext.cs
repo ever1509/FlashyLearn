@@ -14,7 +14,6 @@ public class FlashyLearnContext: DbContext, IFlashyLearnContext
 
     public DbSet<FlashCard> FlashCards { get; }
     public DbSet<Category> Category { get; }
-    public DbSet<Frequency> Frequencies { get; }
     public DbSet<Tag> Tag { get; }
     public DbSet<FlashCardTag> FlashCardTags { get; }
     

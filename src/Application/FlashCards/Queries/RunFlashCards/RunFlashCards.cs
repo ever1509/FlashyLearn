@@ -9,7 +9,7 @@ namespace Application.FlashCards.Queries.RunFlashCards;
 public class RunFlashCards : IRequest<List<FlashCardDto>>
 {
     public string UserId { get; set; }
-    public TimeType TimeType { get; set; }
+    public Frequency Frequency { get; set; }
 }
 
 public class RunFlashCardsHandler : IRequestHandler<RunFlashCards, List<FlashCardDto>>
@@ -25,7 +25,7 @@ public class RunFlashCardsHandler : IRequestHandler<RunFlashCards, List<FlashCar
     {
         var flashCardsDto = new List<FlashCardDto>();
 
-        var flashCards = await _context.FlashCards.ToListAsync(cancellationToken);
+        var flashCards = await _context.FlashCards.Where(x=>x.Frequency == request.Frequency).ToListAsync(cancellationToken);
 
 
         foreach (var flashCard in flashCards)

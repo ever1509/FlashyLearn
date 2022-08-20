@@ -19,14 +19,8 @@ public class FlashCardMap : IEntityTypeConfiguration<FlashCard>
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasForeignKey(e => e.CategoryID)
             .HasConstraintName("FK_FlashCard_Category");
-        
-        builder.HasOne(e => e.Frequency)
-            .WithOne(d => d.FlashCard)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasForeignKey<FlashCard>(e=>e.FrequencyID)
-            .HasConstraintName("FK_FlashCard_Frequency");
-        
-            builder.HasMany<Tag>(s => s.Tags)
+
+        builder.HasMany<Tag>(s => s.Tags)
             .WithMany(c => c.FlashCards);
             
         

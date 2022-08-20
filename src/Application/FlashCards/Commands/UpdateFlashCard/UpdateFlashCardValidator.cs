@@ -10,7 +10,5 @@ public class UpdateFlashCardValidator: AbstractValidator<UpdateFlashCard>
         RuleFor(x => x.BackText).NotEmpty();
         RuleFor(x => x.FrontText).NotEmpty();
         RuleFor(x => x.CategoryId).NotEmpty();
-        RuleFor(x => x.FrequencyId).NotEmpty();
-        
     }
 }

@@ -1,4 +1,5 @@
 using Application.Common.Interfaces;
+using Domain.Enums;
 using MediatR;
 
 namespace Application.FlashCards.Commands.UpdateFlashCard;
@@ -9,7 +10,7 @@ public class UpdateFlashCard : IRequest<string>
     public string FrontText { get; set; }
     public string BackText { get; set; }
     public string CategoryId { get; set; }
-    public string FrequencyId { get; set; }
+    public Frequency Frequency { get; set; }
 }
 
 public class UpdateFlashCardHandler : IRequestHandler<UpdateFlashCard, string>
@@ -31,7 +32,7 @@ public class UpdateFlashCardHandler : IRequestHandler<UpdateFlashCard, string>
         entity.FrontText = request.FrontText;
         entity.BackText = request.BackText;
         entity.CategoryID = Guid.Parse(request.CategoryId);
-        entity.FrequencyID = Guid.Parse(request.FrequencyId);
+        entity.Frequency = request.Frequency;
 
         await _context.SaveChangesAsync(cancellationToken);
 

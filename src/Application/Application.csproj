@@ -18,8 +18,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Categories\Queries" />
-      <Folder Include="FlashCards\Queries" />
+      <Folder Include="FlashCards\Queries\RunFlashCardsDaily" />
+      <Folder Include="FlashCards\Queries\RunFlashCardsMonthly" />
+      <Folder Include="FlashCards\Queries\RunFlashCardsWeekly" />
     </ItemGroup>
 
 </Project>

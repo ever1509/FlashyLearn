@@ -7,6 +7,7 @@ namespace Application.Categories.Commands.CreateCategory;
 public class CreateCategoryCommand : IRequest<Unit>
 {
     public string Name { get; set; }
+    public string UserId { get; set; }
 }
 
 public class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryCommand, Unit>
@@ -22,7 +23,8 @@ public class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryCommand
         var newCategory = new Category()
         {
             CategoryID = Guid.NewGuid(),
-            Name = request.Name
+            Name = request.Name,
+            UserID = Guid.Parse(request.UserId)
         };
         _context.Category.Add(newCategory);
         await _context.SaveChangesAsync(cancellationToken);

@@ -12,5 +12,6 @@ public class CategoryMap: IEntityTypeConfiguration<Category>
         builder.Property(e => e.CategoryID).HasColumnType("uuid");
         builder.Property(e => e.Name).HasColumnName("Name");
         builder.Property(e => e.Name).HasColumnType("text");
+        builder.Property(e => e.UserID).IsRequired();
     }
 }

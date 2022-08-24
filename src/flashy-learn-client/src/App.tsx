@@ -38,7 +38,7 @@ const items: MenuItem[] = [
   getItem('Files', '9', <FileOutlined />),
 ];
 
-function App() {
+const App: React.FC = () => {
 
   const [collapsed, setCollapsed] = useState(false);
 

@@ -1,5 +1,6 @@
 using Application.Categories.Dtos;
 using Application.Common.Interfaces;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,7 +24,13 @@ public class AllCategoriesHandler : IRequestHandler<AllCategories, List<Category
     public async Task<List<CategoryDto>> Handle(AllCategories request, CancellationToken cancellationToken)
     {
         var categoriesDto = new List<CategoryDto>();
-        var categories = await _context.Category.ToListAsync(cancellationToken);
+        List<Category> categories;
+
+        if (request.UserId is null)
+            categories = await _context.Category.ToListAsync(cancellationToken);
+        else
+            categories = await _context.Category.Where(x => x.UserID == Guid.Parse(request.UserId))
+                .ToListAsync(cancellationToken);
 
         foreach (var category in categories)
         {

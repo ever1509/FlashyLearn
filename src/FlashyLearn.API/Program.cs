@@ -5,6 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+//services cors
+builder.Services.AddCors(p => p.AddPolicy("flashy-learn", policyBuilder =>
+{
+    policyBuilder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

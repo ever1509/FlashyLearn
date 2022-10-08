@@ -1,3 +1,5 @@
+using Application.Categories.Commands.CreateCategory;
+using Application.Categories.Commands.DeleteCategory;
 using Application.Categories.Dtos;
 using Application.Categories.Queries.AllCategories;
 using MediatR;
@@ -20,5 +22,33 @@ public class CategoryController : ControllerBase
     public async Task<ActionResult<List<CategoryDto>>> GetCategories()
     {
         return await _mediator.Send(new AllCategories());
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommand command)
+    {
+        try
+        {        
+            await _mediator.Send(command);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<int>> DeleteCategory(string id)
+    {
+        try
+        {        
+            await _mediator.Send(new DeleteCategoryCommand(){Id = id});
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }

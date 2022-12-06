@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="HotChocolate.AspNetCore" Version="12.12.1" />
-      <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.12.1" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.5" />
+      <PackageReference Include="HotChocolate.AspNetCore" Version="12.15.2" />
+      <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.15.2" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>

@@ -6,9 +6,9 @@ namespace Application.FlashCards.Commands.CreateFlashCard;
 
 public class CreateFlashCardCommand : IRequest<string>
 {
-    public string FrontText { get; set; }
-    public string BackText { get; set; }
-    public string CategoryID { get; set; }
+    public string FrontText { get; set; } = string.Empty;
+    public string BackText { get; set; } = string.Empty;
+    public string CategoryID { get; set; } = string.Empty;
 }
 
 public class CreateFlashCardCommandHandler : IRequestHandler<CreateFlashCardCommand, string>

@@ -1,4 +1,3 @@
-using System.Reflection;
 using Application.Common.Interfaces;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +18,7 @@ public class FlashyLearnContext: DbContext, IFlashyLearnContext
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        builder.ApplyConfigurationsFromAssembly(typeof(FlashyLearnContext).Assembly);
         base.OnModelCreating(builder);
     }
 }

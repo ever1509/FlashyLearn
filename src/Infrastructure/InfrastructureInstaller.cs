@@ -11,7 +11,7 @@ public static class InfrastructureInstaller
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<FlashyLearnContext>(options =>
-                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                 options.UseSqlServer(configuration.GetConnectionString("FlashyConnection"),
                      builder => builder.MigrationsAssembly(typeof(FlashyLearnContext).Assembly.FullName)));
 
         services.AddScoped<IFlashyLearnContext>(provider => provider.GetRequiredService<FlashyLearnContext>());

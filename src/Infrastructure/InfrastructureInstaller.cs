@@ -10,22 +10,11 @@ public static class InfrastructureInstaller
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContextFactory<FlashyLearnContext>(options =>
-            options.UseNpgsql(
-                configuration.GetConnectionString("FlashyConnection"),
-                b => b.MigrationsAssembly(typeof(FlashyLearnContext).Assembly.FullName)));
-
         services.AddDbContext<FlashyLearnContext>(options =>
-            options.UseNpgsql(
-                configuration.GetConnectionString("FlashyConnection"),
-                b => b.MigrationsAssembly(typeof(FlashyLearnContext).Assembly.FullName)));
+                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                     builder => builder.MigrationsAssembly(typeof(FlashyLearnContext).Assembly.FullName)));
 
-
-        //services.AddScoped<IFluent>(provider => provider.GetRequiredService<FlashyLearnContext>());
-
-        services.AddScoped<IFlashyLearnContext>(
-            sp => sp.GetRequiredService<IDbContextFactory<FlashyLearnContext>>()
-                .CreateDbContext());
+        services.AddScoped<IFlashyLearnContext>(provider => provider.GetRequiredService<FlashyLearnContext>());
 
         return services;
     }

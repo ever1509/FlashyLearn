@@ -12,11 +12,11 @@ public class FlashyLearnContext: DbContext, IFlashyLearnContext
 
     }
 
-    public DbSet<FlashCard> FlashCards { get; }
-    public DbSet<Category> Category { get; }
-    public DbSet<Tag> Tag { get; }
-    public DbSet<FlashCardTag> FlashCardTags { get; }
-    
+    public DbSet<FlashCard> FlashCards => Set<FlashCard>();
+    public DbSet<Category> Category => Set<Category>();
+    public DbSet<Tag> Tag => Set<Tag>();
+    public DbSet<FlashCardTag> FlashCardTags => Set<FlashCardTag>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

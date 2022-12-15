@@ -10,11 +10,15 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//services cors
-builder.Services.AddCors(p => p.AddPolicy("flashy-learn", policyBuilder =>
+
+builder.Services.AddCors(p =>
 {
-    policyBuilder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));
+    var frontedURL = builder.Configuration.GetValue<string>("frontend_url");
+    p.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins(frontedURL).AllowAnyMethod().AllowAnyHeader();
+    });
+});
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -27,6 +31,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseCors();
 
 app.UseAuthorization();
 

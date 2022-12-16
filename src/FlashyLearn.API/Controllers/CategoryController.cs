@@ -30,7 +30,7 @@ public class CategoryController : ControllerBase
         try
         {        
             await _mediator.Send(command);
-            return Ok();
+            return NoContent();
         }
         catch (Exception e)
         {
@@ -44,7 +44,7 @@ public class CategoryController : ControllerBase
         try
         {        
             await _mediator.Send(new DeleteCategoryCommand(){Id = id});
-            return Ok();
+            return NoContent();
         }
         catch (Exception e)
         {

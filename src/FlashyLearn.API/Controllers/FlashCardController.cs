@@ -31,7 +31,7 @@ public class FlashCardController : ControllerBase
         try
         {        
             await _mediator.Send(command);
-            return Ok();
+            return NoContent();
         }
         catch (Exception e)
         {
@@ -45,7 +45,7 @@ public class FlashCardController : ControllerBase
         try
         {        
             await _mediator.Send(command);
-            return Ok();
+            return NoContent();
         }
         catch (Exception e)
         {
@@ -59,7 +59,7 @@ public class FlashCardController : ControllerBase
         try
         {        
             await _mediator.Send(new DeleteFlashCard(){Id = id});
-            return Ok();
+            return NoContent();
         }
         catch (Exception e)
         {

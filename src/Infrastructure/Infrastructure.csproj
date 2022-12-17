@@ -10,6 +10,7 @@
       <PackageReference Include="HotChocolate.AspNetCore" Version="12.15.2" />
       <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.15.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -17,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Data\Migrations\" />
+      <Folder Include="Data\SQLServer\Migrations\" />
     </ItemGroup>
 
 </Project>

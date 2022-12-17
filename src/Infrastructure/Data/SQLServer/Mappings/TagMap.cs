@@ -2,9 +2,9 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.Mappings;
+namespace Infrastructure.Data.SQLServer.Mappings;
 
-public class TagMap: IEntityTypeConfiguration<Tag>
+public class TagMap : IEntityTypeConfiguration<Tag>
 {
     public void Configure(EntityTypeBuilder<Tag> builder)
     {

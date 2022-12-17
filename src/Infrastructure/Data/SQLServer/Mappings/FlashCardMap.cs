@@ -2,7 +2,7 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.Mappings;
+namespace Infrastructure.Data.SQLServer.Mappings;
 
 public class FlashCardMap : IEntityTypeConfiguration<FlashCard>
 {
@@ -20,9 +20,9 @@ public class FlashCardMap : IEntityTypeConfiguration<FlashCard>
             .HasForeignKey(e => e.CategoryID)
             .HasConstraintName("FK_FlashCard_Category");
 
-        builder.HasMany<Tag>(s => s.Tags)
+        builder.HasMany(s => s.Tags)
             .WithMany(c => c.FlashCards);
-            
-        
+
+
     }
 }

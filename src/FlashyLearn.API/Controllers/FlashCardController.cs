@@ -20,9 +20,9 @@ public class FlashCardController : ControllerBase
     }
 
     [HttpGet("run-flash-cards")]
-    public async Task<ActionResult<List<FlashCardDto>>> RunFlashCards()
+    public async Task<ActionResult<List<FlashCardDto>>> RunFlashCards(RunFlashCards runFlashCardsQuery)
     {
-        return await _mediator.Send(new RunFlashCards());
+        return await _mediator.Send(runFlashCardsQuery);
     }
     
     [HttpPost]

@@ -8,7 +8,8 @@ namespace Application.Categories.Queries.AllCategories;
 
 public class AllCategories : IRequest<List<CategoryDto>>
 {
-    public int Page { get; set; } = 1;
+    public int PageNumber { get; init; } = 1;
+    public int PageSize { get; init; } = 10;
     public string? UserId { get; set; } = null;
 }
 
@@ -29,7 +30,7 @@ public class AllCategoriesHandler : IRequestHandler<AllCategories, List<Category
         if (request.UserId is null)
             categories = await _context.Category.ToListAsync(cancellationToken);
         else
-            categories = await _context.Category.Where(x => x.UserID == Guid.Parse(request.UserId))
+            categories = await _context.Category.Where(x => x.UserID == Guid.Parse(request.UserId))                 
                 .ToListAsync(cancellationToken);
 
         foreach (var category in categories)
@@ -41,6 +42,8 @@ public class AllCategoriesHandler : IRequestHandler<AllCategories, List<Category
             });
         }
         
-        return categoriesDto;
+        return  categoriesDto
+            .Skip((request.PageNumber -1)* request.PageSize)
+            .Take(request.PageSize).ToList();
     }
 }

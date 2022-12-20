@@ -19,9 +19,9 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<CategoryDto>>> GetCategories()
+    public async Task<ActionResult<List<CategoryDto>>> GetCategories(AllCategories allCategoriesQuery)
     {
-        return await _mediator.Send(new AllCategories());
+        return await _mediator.Send(allCategoriesQuery);
     }
 
     [HttpPost]

@@ -3,6 +3,7 @@ using Application.FlashCards.Commands.DeleteFlashCard;
 using Application.FlashCards.Commands.UpdateFlashCard;
 using Application.FlashCards.Dtos;
 using Application.FlashCards.Queries.RunFlashCards;
+using Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +21,9 @@ public class FlashCardController : ControllerBase
     }
 
     [HttpGet("run-flash-cards")]
-    public async Task<ActionResult<List<FlashCardDto>>> RunFlashCards(RunFlashCards runFlashCardsQuery)
+    public async Task<ActionResult<List<FlashCardDto>>> RunFlashCards(Frequency frequency, string? userId = null)
     {
-        return await _mediator.Send(runFlashCardsQuery);
+        return await _mediator.Send(new RunFlashCards() { Frequency = frequency, UserId = userId });
     }
     
     [HttpPost]

@@ -10,7 +10,7 @@ public class AllCategories : IRequest<List<CategoryDto>>
 {
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 10;
-    public string? UserId { get; set; } = null;
+    public string? UserId { get; set; }
 }
 
 public class AllCategoriesHandler : IRequestHandler<AllCategories, List<CategoryDto>>

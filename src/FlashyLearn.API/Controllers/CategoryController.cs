@@ -19,9 +19,9 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<CategoryDto>>> GetCategories(AllCategories allCategoriesQuery)
+    public async Task<ActionResult<List<CategoryDto>>> GetCategories(int pageNumber = 1, int pageSize = 10, string? userId = null)
     {
-        return await _mediator.Send(allCategoriesQuery);
+        return await _mediator.Send(new AllCategories() { PageNumber = pageNumber, PageSize = pageSize, UserId = userId});
     }
 
     [HttpPost]

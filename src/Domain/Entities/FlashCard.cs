@@ -9,8 +9,8 @@ public class FlashCard
         Tags = new HashSet<Tag>();
     }
     public Guid FlashCardID { get; set; }
-    public string FrontText { get; set; }
-    public string BackText { get; set; }
+    public string FrontText { get; set; } = string.Empty;
+    public string BackText { get; set; } = string.Empty;
     public DateTime CreatedDate { get; set; }
     public Frequency Frequency { get; set; }
     public Guid CategoryID { get; set; }

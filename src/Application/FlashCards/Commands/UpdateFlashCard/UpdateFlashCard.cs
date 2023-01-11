@@ -6,10 +6,10 @@ namespace Application.FlashCards.Commands.UpdateFlashCard;
 
 public class UpdateFlashCard : IRequest<string>
 {
-    public string Id { get; set; }
-    public string FrontText { get; set; }
-    public string BackText { get; set; }
-    public string CategoryId { get; set; }
+    public string Id { get; set; } = string.Empty;
+    public string FrontText { get; set; } = string.Empty;
+    public string BackText { get; set; } = string.Empty;
+    public string CategoryId { get; set; } = string.Empty;
     public Frequency Frequency { get; set; }
 }
 

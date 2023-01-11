@@ -6,7 +6,7 @@ namespace Application.FlashCards.Commands.DeleteFlashCard;
 
 public class DeleteFlashCard : IRequest<Unit>
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 }
 
 public class DeleteFlashCardHandler : IRequestHandler<DeleteFlashCard, Unit>

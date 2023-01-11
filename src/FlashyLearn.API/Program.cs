@@ -8,13 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration, DatabaseEnum.PostgresSQL);
+builder.Services.AddInfrastructure(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(p =>
 {
-    var frontedURL = builder.Configuration.GetValue<string>("frontend_url");
+    var frontedURL = builder.Configuration.GetValue<string>("frontend_url") ?? "*";
     p.AddDefaultPolicy(builder =>
     {
         builder.WithOrigins(frontedURL).AllowAnyMethod().AllowAnyHeader();

@@ -6,7 +6,7 @@ namespace Application.Categories.Commands.DeleteCategory;
 
 public class DeleteCategoryCommand: IRequest<Unit>
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 }
 
 public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, Unit>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Data.PostgresSQL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitPostgresSQLDb : Migration
+    public partial class UpdatingDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

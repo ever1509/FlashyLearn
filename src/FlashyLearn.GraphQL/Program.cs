@@ -1,5 +1,4 @@
 using Application;
-using Domain.Enums;
 using Infrastructure;
 using Infrastructure.GraphQL;
 
@@ -9,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration, DatabaseEnum.PostgresSQL);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 //services cors

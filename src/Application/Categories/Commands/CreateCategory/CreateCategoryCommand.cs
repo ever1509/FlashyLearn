@@ -6,8 +6,8 @@ namespace Application.Categories.Commands.CreateCategory;
 
 public class CreateCategoryCommand : IRequest<Unit>
 {
-    public string Name { get; set; }
-    public string UserId { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string UserId { get; set; } = string.Empty;
 }
 
 public class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryCommand, Unit>

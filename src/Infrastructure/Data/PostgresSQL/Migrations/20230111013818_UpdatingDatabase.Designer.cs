@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Data.PostgresSQL.Migrations
 {
     [DbContext(typeof(FlashyLearnContext))]
-    [Migration("20221221054759_InitPostgresSQLDb")]
-    partial class InitPostgresSQLDb
+    [Migration("20230111013818_UpdatingDatabase")]
+    partial class UpdatingDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

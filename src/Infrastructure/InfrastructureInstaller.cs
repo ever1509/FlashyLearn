@@ -14,10 +14,10 @@ public static class InfrastructureInstaller
         switch (databaseToUse)
         {
             case DatabaseEnum.SQLServer:
-                services.AddDbContext<FlashyLearnContext>(options =>
-                                 options.UseSqlServer(configuration.GetConnectionString("FlashyConnSQLServer"),
-                                     builder => builder.MigrationsAssembly(typeof(FlashyLearnContext).Assembly.FullName)));
-                services.AddScoped<IFlashyLearnContext>(provider => provider.GetRequiredService<FlashyLearnContext>());
+                // services.AddDbContext<FlashyLearnContext>(options =>
+                //                  options.UseSqlServer(configuration.GetConnectionString("FlashyConnSQLServer"),
+                //                      builder => builder.MigrationsAssembly(typeof(FlashyLearnContext).Assembly.FullName)));
+                // services.AddScoped<IFlashyLearnContext>(provider => provider.GetRequiredService<FlashyLearnContext>());
                 break;
             case DatabaseEnum.PostgresSQL:
                 services.AddDbContextFactory<FlashyLearnContext>(options =>

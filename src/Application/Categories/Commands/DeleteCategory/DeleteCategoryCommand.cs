@@ -11,21 +11,24 @@ public class DeleteCategoryCommand: IRequest<Unit>
 
 public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, Unit>
 {
-    private readonly IFlashyLearnContext _context;
-    public DeleteCategoryCommandHandler(IFlashyLearnContext context)
+    private readonly ICategoryRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public DeleteCategoryCommandHandler(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork)
     {
-        _context = context;
+        _repository = categoryRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         var id = Guid.Parse(request.Id);
-        var entity = await _context.Category.FirstOrDefaultAsync(x => x.CategoryID == id, cancellationToken: cancellationToken);
+        var entity = await _repository.Get(x => x != null && x.CategoryID == id, cancellationToken: cancellationToken);
         if (entity is null)
             throw new Exception("Invalid ID");
 
-        _context.Category.Remove(entity);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _repository.DeleteAsync(entity);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;
     }

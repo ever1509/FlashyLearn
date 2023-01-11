@@ -15,35 +15,34 @@ public class AllCategories : IRequest<List<CategoryDto>>
 
 public class AllCategoriesHandler : IRequestHandler<AllCategories, List<CategoryDto>>
 {
-    private readonly IFlashyLearnContext _context;
+    // private readonly IFlashyLearnContext _context;
+    //
+    // public AllCategoriesHandler(IFlashyLearnContext context)
+    // {
+    //     _context = context;
+    // }
 
-    public AllCategoriesHandler(IFlashyLearnContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<List<CategoryDto>> Handle(AllCategories request, CancellationToken cancellationToken)
+    public Task<List<CategoryDto>> Handle(AllCategories request, CancellationToken cancellationToken)
     {
         var categoriesDto = new List<CategoryDto>();
-        List<Category> categories;
 
-        if (request.UserId is null)
-            categories = await _context.Category.ToListAsync(cancellationToken);
-        else
-            categories = await _context.Category.Where(x => x.UserID == Guid.Parse(request.UserId))                 
-                .ToListAsync(cancellationToken);
+        // if (request.UserId is null)
+            // categories = await _context.Category.ToListAsync(cancellationToken);
+        // else
+            // categories = await _context.Category.Where(x => x.UserID == Guid.Parse(request.UserId))                 
+            //     .ToListAsync(cancellationToken);
 
-        foreach (var category in categories)
-        {
-            categoriesDto.Add(new CategoryDto
-            {
-                CategoryID = category.CategoryID,
-                Name = category.Name
-            });
-        }
+        // foreach (var category in categories)
+        // {
+        //     categoriesDto.Add(new CategoryDto
+        //     {
+        //         CategoryID = category.CategoryID,
+        //         Name = category.Name
+        //     });
+        // }
         
-        return  categoriesDto
+        return  Task.FromResult(categoriesDto
             .Skip((request.PageNumber -1)* request.PageSize)
-            .Take(request.PageSize).ToList();
+            .Take(request.PageSize).ToList());
     }
 }

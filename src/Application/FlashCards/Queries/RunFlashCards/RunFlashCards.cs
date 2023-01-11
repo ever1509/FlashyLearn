@@ -14,30 +14,30 @@ public class RunFlashCards : IRequest<List<FlashCardDto>>
 
 public class RunFlashCardsHandler : IRequestHandler<RunFlashCards, List<FlashCardDto>>
 {
-    private readonly IFlashyLearnContext _context;
+    // private readonly IFlashyLearnContext _context;
+    //
+    // public RunFlashCardsHandler(IFlashyLearnContext context)
+    // {
+    //     _context = context;
+    // }
 
-    public RunFlashCardsHandler(IFlashyLearnContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<List<FlashCardDto>> Handle(RunFlashCards request, CancellationToken cancellationToken)
+    public Task<List<FlashCardDto>> Handle(RunFlashCards request, CancellationToken cancellationToken)
     {
         var flashCardsDto = new List<FlashCardDto>();
 
-        var flashCards = await _context.FlashCards.Where(x=>x.Frequency == request.Frequency).ToListAsync(cancellationToken);
-
-
-        foreach (var flashCard in flashCards)
-        {
-            flashCardsDto.Add(new FlashCardDto
-            {
-                FrontText = flashCard.FrontText,
-                BackText = flashCard.BackText,
-                CategoryId = flashCard.CategoryID.ToString()
-            });
-        }
+        // var flashCards = await _context.FlashCards.Where(x=>x.Frequency == request.Frequency).ToListAsync(cancellationToken);
+        //
+        //
+        // foreach (var flashCard in flashCards)
+        // {
+        //     flashCardsDto.Add(new FlashCardDto
+        //     {
+        //         FrontText = flashCard.FrontText,
+        //         BackText = flashCard.BackText,
+        //         CategoryId = flashCard.CategoryID.ToString()
+        //     });
+        // }
         
-        return flashCardsDto;
+        return Task.FromResult(flashCardsDto);
     }
 }

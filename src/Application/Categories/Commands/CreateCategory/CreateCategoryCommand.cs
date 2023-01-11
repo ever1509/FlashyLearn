@@ -12,10 +12,13 @@ public class CreateCategoryCommand : IRequest<Unit>
 
 public class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryCommand, Unit>
 {
-    private readonly IFlashyLearnContext _context;
-    public CreateCategoryCommandHandler(IFlashyLearnContext context)
+    private readonly ICategoryRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public CreateCategoryCommandHandler(ICategoryRepository repository, IUnitOfWork unitOfWork)
     {
-        _context = context;
+        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Unit> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
@@ -26,8 +29,8 @@ public class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryCommand
             Name = request.Name,
             UserID = Guid.Parse(request.UserId)
         };
-        _context.Category.Add(newCategory);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _repository.CreateAsync(newCategory);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
     }

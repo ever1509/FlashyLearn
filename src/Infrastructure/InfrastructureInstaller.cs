@@ -21,7 +21,7 @@ public static class InfrastructureInstaller
             options.UseNpgsql(
                 configuration.GetConnectionString("FlashyConnPostgresSQL"),
                 b => b.MigrationsAssembly(typeof(FlashyLearnContext).Assembly.FullName)));
-        services.AddScoped<IFlashyLearnContext>(
+        services.AddScoped<IUnitOfWork>(
             sp => sp.GetRequiredService<IDbContextFactory<FlashyLearnContext>>()
                 .CreateDbContext());
         return services;

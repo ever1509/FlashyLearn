@@ -15,16 +15,18 @@ public class UpdateFlashCard : IRequest<string>
 
 public class UpdateFlashCardHandler : IRequestHandler<UpdateFlashCard, string>
 {
-    private readonly IFlashyLearnContext _context;
+    private readonly IFlashCardRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateFlashCardHandler(IFlashyLearnContext context)
+    public UpdateFlashCardHandler(IFlashCardRepository repository, IUnitOfWork unitOfWork)
     {
-        _context = context;
+        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<string> Handle(UpdateFlashCard request, CancellationToken cancellationToken)
     {
-        var entity = await _context.FlashCards.FindAsync(request.Id);
+        var entity = await _repository.Get(x => x != null && x.FlashCardID == Guid.Parse( request.Id), cancellationToken: cancellationToken);
         
         if (entity is null)
             throw new Exception("Invalid ID");
@@ -34,7 +36,7 @@ public class UpdateFlashCardHandler : IRequestHandler<UpdateFlashCard, string>
         entity.CategoryID = Guid.Parse(request.CategoryId);
         entity.Frequency = request.Frequency;
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return entity.FlashCardID.ToString();
     }

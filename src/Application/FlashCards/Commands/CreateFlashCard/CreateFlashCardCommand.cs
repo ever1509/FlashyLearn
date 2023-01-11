@@ -13,11 +13,13 @@ public class CreateFlashCardCommand : IRequest<string>
 
 public class CreateFlashCardCommandHandler : IRequestHandler<CreateFlashCardCommand, string>
 {
-    private readonly IFlashyLearnContext _context;
+    private readonly IFlashCardRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateFlashCardCommandHandler(IFlashyLearnContext context)
+    public CreateFlashCardCommandHandler(IFlashCardRepository repository, IUnitOfWork unitOfWork)
     {
-        _context = context;
+        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<string> Handle(CreateFlashCardCommand request, CancellationToken cancellationToken)
@@ -31,9 +33,9 @@ public class CreateFlashCardCommandHandler : IRequestHandler<CreateFlashCardComm
             CreatedDate = DateTime.Now
         };
 
-        _context.FlashCards.Add(newFlashCard);
+        await _repository.CreateAsync(newFlashCard);
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return newFlashCard.FlashCardID.ToString();
 

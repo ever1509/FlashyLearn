@@ -11,23 +11,25 @@ public class DeleteFlashCard : IRequest<Unit>
 
 public class DeleteFlashCardHandler : IRequestHandler<DeleteFlashCard, Unit>
 {
-    private readonly IFlashyLearnContext _context;
+    private readonly IFlashCardRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteFlashCardHandler(IFlashyLearnContext context)
+    public DeleteFlashCardHandler(IFlashCardRepository repository, IUnitOfWork unitOfWork)
     {
-        _context = context;
+        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Unit> Handle(DeleteFlashCard request, CancellationToken cancellationToken)
     {
         var id = Guid.Parse(request.Id);
         
-        var entity = await _context.FlashCards.FirstOrDefaultAsync(x => x.FlashCardID == id, cancellationToken: cancellationToken);
+        var entity = await _repository.Get(x => x != null && x.FlashCardID == id, cancellationToken: cancellationToken);
         if (entity is null)
             throw new Exception("Invalid ID");
 
-        _context.FlashCards.Remove(entity);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _repository.DeleteAsync(entity);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;
     }

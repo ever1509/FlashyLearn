@@ -14,30 +14,15 @@ public class RunFlashCards : IRequest<List<FlashCardDto>>
 
 public class RunFlashCardsHandler : IRequestHandler<RunFlashCards, List<FlashCardDto>>
 {
-    // private readonly IFlashyLearnContext _context;
-    //
-    // public RunFlashCardsHandler(IFlashyLearnContext context)
-    // {
-    //     _context = context;
-    // }
+    private readonly IFlashCardRepository _repository;
 
-    public Task<List<FlashCardDto>> Handle(RunFlashCards request, CancellationToken cancellationToken)
+    public RunFlashCardsHandler(IFlashCardRepository repository)
     {
-        var flashCardsDto = new List<FlashCardDto>();
+        _repository = repository;
+    }
 
-        // var flashCards = await _context.FlashCards.Where(x=>x.Frequency == request.Frequency).ToListAsync(cancellationToken);
-        //
-        //
-        // foreach (var flashCard in flashCards)
-        // {
-        //     flashCardsDto.Add(new FlashCardDto
-        //     {
-        //         FrontText = flashCard.FrontText,
-        //         BackText = flashCard.BackText,
-        //         CategoryId = flashCard.CategoryID.ToString()
-        //     });
-        // }
-        
-        return Task.FromResult(flashCardsDto);
+    public async Task<List<FlashCardDto>> Handle(RunFlashCards request, CancellationToken cancellationToken)
+    {
+        return await _repository.RunFlashCards(request, cancellationToken);
     }
 }

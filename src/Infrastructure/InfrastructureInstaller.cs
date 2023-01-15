@@ -1,6 +1,7 @@
 using Application.Common.Interfaces;
 using Domain.Enums;
 using Infrastructure.Data;
+using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,9 @@ public static class InfrastructureInstaller
         services.AddScoped<IUnitOfWork>(
             sp => sp.GetRequiredService<IDbContextFactory<FlashyLearnContext>>()
                 .CreateDbContext());
+
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IFlashCardRepository, FlashCardRepository>();
         return services;
     }
 }

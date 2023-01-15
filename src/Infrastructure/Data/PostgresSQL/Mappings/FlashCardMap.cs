@@ -13,6 +13,8 @@ namespace Infrastructure.Data.PostgresSQL.Mappings
             builder.Property(e => e.FrontText).HasColumnType("text");
             builder.Property(e => e.CreatedDate).HasColumnType("timestamp").IsRequired();
             builder.Property(e => e.BackText).HasColumnType("text");
+            
+            builder.OwnsOne(flashcard => flashcard.Category);
 
             builder.HasOne(e => e.Category)
                 .WithMany(d => d.FlashCards);

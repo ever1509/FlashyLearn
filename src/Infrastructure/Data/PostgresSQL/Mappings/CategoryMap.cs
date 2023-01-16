@@ -8,8 +8,8 @@ namespace Infrastructure.Data.PostgresSQL.Mappings
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.HasKey(e => e.CategoryID);
-            builder.Property(e => e.CategoryID).HasColumnType("uuid");
+            builder.HasKey(e => e.Id);
+            builder.Property(e => e.Id).HasColumnType("uuid");
             builder.Property(e => e.Name).HasColumnName("Name");
             builder.Property(e => e.Name).HasColumnType("text");
             builder.Property(e => e.UserID).IsRequired().HasColumnType("uuid");

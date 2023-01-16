@@ -23,7 +23,7 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
     public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         var id = Guid.Parse(request.Id);
-        var entity = await _repository.Get(x => x != null && x.CategoryID == id, cancellationToken: cancellationToken);
+        var entity = await _repository.Get(x => x != null && x.Id == id, cancellationToken: cancellationToken);
         if (entity is null)
             throw new Exception("Invalid ID");
 

@@ -8,8 +8,8 @@ namespace Infrastructure.Data.PostgresSQL.Mappings
     {
         public void Configure(EntityTypeBuilder<FlashCard> builder)
         {
-            builder.HasKey(e => e.FlashCardID);
-            builder.Property(e => e.FlashCardID).HasColumnType("uuid");
+            builder.HasKey(e => e.Id);
+            builder.Property(e => e.Id).HasColumnType("uuid");
             builder.Property(e => e.FrontText).HasColumnType("text");
             builder.Property(e => e.CreatedDate).HasColumnType("timestamp").IsRequired();
             builder.Property(e => e.BackText).HasColumnType("text");

@@ -1,5 +1,6 @@
 using Application.Common.Interfaces;
 using Domain.Entities;
+using Domain.Enums;
 using MediatR;
 
 namespace Application.FlashCards.Commands.CreateFlashCard;
@@ -24,20 +25,14 @@ public class CreateFlashCardCommandHandler : IRequestHandler<CreateFlashCardComm
 
     public async Task<string> Handle(CreateFlashCardCommand request, CancellationToken cancellationToken)
     {
-        var newFlashCard = new FlashCard()
-        {
-            FlashCardID = Guid.NewGuid(),
-            BackText = request.BackText,
-            FrontText = request.FrontText,
-            CategoryID = Guid.Parse(request.CategoryID),
-            CreatedDate = DateTime.Now
-        };
+        var newFlashCard = FlashCard.Create(Guid.NewGuid(), request.BackText, request.FrontText,
+            DateTime.UtcNow, Frequency.Monthly, Guid.Parse(request.CategoryID));
 
         await _repository.CreateAsync(newFlashCard);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return newFlashCard.FlashCardID.ToString();
+        return newFlashCard.Id.ToString();
 
     }
 }

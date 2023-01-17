@@ -1,6 +1,5 @@
 using Application.Common.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.FlashCards.Commands.DeleteFlashCard;
 
@@ -24,7 +23,7 @@ public class DeleteFlashCardHandler : IRequestHandler<DeleteFlashCard, Unit>
     {
         var id = Guid.Parse(request.Id);
         
-        var entity = await _repository.Get(x => x != null && x.FlashCardID == id, cancellationToken: cancellationToken);
+        var entity = await _repository.Get(x => x != null && x.Id == id, cancellationToken: cancellationToken);
         if (entity is null)
             throw new Exception("Invalid ID");
 

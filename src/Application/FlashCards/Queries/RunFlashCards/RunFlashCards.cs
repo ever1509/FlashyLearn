@@ -2,7 +2,6 @@ using Application.Common.Interfaces;
 using Application.FlashCards.Dtos;
 using Domain.Enums;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.FlashCards.Queries.RunFlashCards;
 

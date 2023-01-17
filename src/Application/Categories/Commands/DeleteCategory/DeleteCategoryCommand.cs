@@ -1,6 +1,5 @@
 using Application.Common.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Categories.Commands.DeleteCategory;
 

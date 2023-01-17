@@ -1,4 +1,3 @@
-using System.Dynamic;
 using Domain.Enums;
 
 namespace Domain.Entities;
@@ -31,7 +30,7 @@ public class FlashCard
     public static FlashCard Create(Guid flashCardId, string frontText, string backText, DateTime createdDate,
         Frequency frequency, Guid categoryId)
     {
-        return new FlashCard(Guid.NewGuid(), backText, frontText,
+        return new FlashCard(flashCardId, backText, frontText,
             DateTime.UtcNow, frequency, categoryId);
     }
 

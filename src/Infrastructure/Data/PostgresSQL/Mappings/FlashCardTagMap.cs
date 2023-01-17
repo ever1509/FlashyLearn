@@ -8,12 +8,12 @@ namespace Infrastructure.Data.PostgresSQL.Mappings
     {
         public void Configure(EntityTypeBuilder<FlashCardTag> builder)
         {
-            builder.HasKey(e => new { e.TagID, e.FlashCardID });
+            builder.HasKey(e => new { e.TagID, e.Id });
 
             builder
                 .HasOne(sc => sc.FlashCard)
                 .WithMany(s => s.FlashCardTags)
-                .HasForeignKey(sc => sc.FlashCardID);
+                .HasForeignKey(sc => sc.Id);
 
 
             builder

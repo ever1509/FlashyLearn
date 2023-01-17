@@ -4,10 +4,10 @@ public class FlashCardTag
 {
     private FlashCardTag(Guid flashCardId, Guid tagId)
     {
-        FlashCardID = flashCardId;
+        Id = flashCardId;
         TagID = tagId;
     }
-    public Guid FlashCardID { get; private set; }
+    public Guid Id { get; private set; }
     public virtual FlashCard FlashCard { get; set; }
     public Guid TagID { get; private set; }
     public virtual Tag Tag { get; set; }

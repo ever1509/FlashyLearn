@@ -1,16 +1,14 @@
 namespace Domain.Entities;
 
-public class FlashCardTag
+public sealed class FlashCardTag : BaseEntity
 {
-    private FlashCardTag(Guid flashCardId, Guid tagId)
+    private FlashCardTag(Guid id, Guid tagId) : base(id)
     {
-        Id = flashCardId;
         TagID = tagId;
     }
-    public Guid Id { get; private set; }
-    public virtual FlashCard FlashCard { get; set; }
+    public FlashCard FlashCard { get; set; }
     public Guid TagID { get; private set; }
-    public virtual Tag Tag { get; set; }
+    public Tag Tag { get; set; }
 
     public static FlashCardTag Create(Guid flashCardId, Guid tagId)
     {

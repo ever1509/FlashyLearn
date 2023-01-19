@@ -1,6 +1,7 @@
 using Application.Common.Interfaces;
 using Domain.Enums;
 using Infrastructure.Data;
+using Infrastructure.Data.PostgresSQL.Factories;
 using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,7 @@ public static class InfrastructureInstaller
             sp => sp.GetRequiredService<IDbContextFactory<FlashyLearnContext>>()
                 .CreateDbContext());
 
+        services.AddScoped<IConnectionFactory, ConnectionFactory>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IFlashCardRepository, FlashCardRepository>();
         return services;

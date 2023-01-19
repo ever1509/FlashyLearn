@@ -1,11 +1,11 @@
+using System.Data;
 using Application.Common.Interfaces;
-using Domain.Enums;
 using Infrastructure.Data;
-using Infrastructure.Data.PostgresSQL.Factories;
 using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 
 namespace Infrastructure;
 
@@ -27,7 +27,7 @@ public static class InfrastructureInstaller
             sp => sp.GetRequiredService<IDbContextFactory<FlashyLearnContext>>()
                 .CreateDbContext());
 
-        services.AddScoped<IConnectionFactory, ConnectionFactory>();
+        services.AddScoped<IDbConnection>(x => new NpgsqlConnection(configuration.GetConnectionString("FlashyConnPostgresSQL")));
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IFlashCardRepository, FlashCardRepository>();
         return services;

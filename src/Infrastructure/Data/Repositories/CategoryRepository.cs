@@ -1,3 +1,4 @@
+using System.Data;
 using System.Linq.Expressions;
 using Application.Categories.Dtos;
 using Application.Categories.Queries.AllCategories;
@@ -9,10 +10,11 @@ namespace Infrastructure.Data.Repositories;
 
 public class CategoryRepository : ICategoryRepository
 {
-    private readonly IConnectionFactory _connectionFactory;
-    public CategoryRepository(IConnectionFactory connectionFactory)
+    private readonly IDbConnection _dbConnection;
+
+    public CategoryRepository(IDbConnection dbConnection)
     {
-        _connectionFactory = connectionFactory;
+        _dbConnection = dbConnection;
     }
 
     public Task<Category?> Get(Expression<Func<Category?, bool>> predicate, CancellationToken cancellationToken)
@@ -41,13 +43,11 @@ public class CategoryRepository : ICategoryRepository
         var categoriesDto = new List<CategoryDto>();
         if (request.UserId is null)
         {
-            using var connection = _connectionFactory.GetConnection;
-            categories = await connection.QuerySingleAsync($"SELECT * FROM CATEGORIES");
+            categories = (await _dbConnection.QueryAsync<Category>($"SELECT * FROM Categories")).ToList();
         }
         else
         {
-            using var connection = _connectionFactory.GetConnection;
-            categories = await connection.QuerySingleAsync($"SELECT * FROM CATEGORIES WHERE UserId=@UserID", new { UserID = request.UserId });
+            categories = (await _dbConnection.QueryAsync<Category>($"SELECT * FROM Categories WHERE UserId=@UserID", new {UserID = request.UserId})).ToList();
         }
 
         foreach (var category in categories)

@@ -11,10 +11,12 @@ namespace Infrastructure.Data.Repositories;
 public class CategoryRepository : ICategoryRepository
 {
     private readonly IDbConnection _dbConnection;
+    private readonly FlashyLearnContext _context;
 
-    public CategoryRepository(IDbConnection dbConnection)
+    public CategoryRepository(IDbConnection dbConnection, FlashyLearnContext context)
     {
         _dbConnection = dbConnection;
+        _context = context;
     }
 
     public Task<Category?> Get(Expression<Func<Category?, bool>> predicate, CancellationToken cancellationToken)
@@ -40,43 +42,16 @@ public class CategoryRepository : ICategoryRepository
     public async Task<List<CategoryDto>> GetCategories(AllCategories request, CancellationToken cancellationToken)
     {
         var categories = new List<Category>();
-        var categoriesDto = new List<CategoryDto>();
         if (request.UserId is null)
-        {
-            categories = (await _dbConnection.QueryAsync<Category>($"SELECT * FROM Categories")).ToList();
-        }
+            categories = (await _dbConnection.QueryAsync<Category>(@$"SELECT * FROM ""Category""")).ToList();
         else
-        {
-            categories = (await _dbConnection.QueryAsync<Category>($"SELECT * FROM Categories WHERE UserId=@UserID", new {UserID = request.UserId})).ToList();
-        }
+            categories = (await _dbConnection.QueryAsync<Category>(@$"SELECT * FROM ""Category"" WHERE ""UserId""=@UserID", new {UserID = request.UserId})).ToList();
 
-        foreach (var category in categories)
-        {
-                categoriesDto.Add(new CategoryDto
-                 {
-                     CategoryID = category.Id,
-                     Name = category.Name
-                 });
-        }
-        
-        // if (request.UserId is null)
-        // categories = await _context.Category.ToListAsync(cancellationToken);
-        // else
-        // categories = await _context.Category.Where(x => x.UserID == Guid.Parse(request.UserId))                 
-        //     .ToListAsync(cancellationToken);
+        var categoriesDto = categories.Select(category => new CategoryDto {CategoryID = category.Id, Name = category.Name}).ToList();
 
-        // foreach (var category in categories)
-        // {
-        //     categoriesDto.Add(new CategoryDto
-        //     {
-        //         CategoryID = category.CategoryID,
-        //         Name = category.Name
-        //     });
-        // }
+        return await Task.FromResult(categoriesDto
+            .Skip((request.PageNumber -1)* request.PageSize)
+            .Take(request.PageSize).ToList());
         
-        // return  Task.FromResult(categoriesDto
-        //     .Skip((request.PageNumber -1)* request.PageSize)
-        //     .Take(request.PageSize).ToList());
-        return categoriesDto;
     }
 }

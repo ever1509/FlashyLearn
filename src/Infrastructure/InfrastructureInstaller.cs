@@ -27,7 +27,6 @@ public static class InfrastructureInstaller
             sp => sp.GetRequiredService<IDbContextFactory<FlashyLearnContext>>()
                 .CreateDbContext());
 
-        services.AddScoped<IDbConnection>(x => new NpgsqlConnection(configuration.GetConnectionString("FlashyConnPostgresSQL")));
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IFlashCardRepository, FlashCardRepository>();
         return services;

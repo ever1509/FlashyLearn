@@ -1,4 +1,3 @@
-using System.Data;
 using System.Linq.Expressions;
 using Application.Categories.Dtos;
 using Application.Categories.Queries.AllCategories;
@@ -11,12 +10,10 @@ namespace Infrastructure.Data.Repositories;
 
 public class CategoryRepository : ICategoryRepository
 {
-    private readonly IDbConnection _dbConnection;
     private readonly FlashyLearnContext _context;
 
-    public CategoryRepository(IDbConnection dbConnection, FlashyLearnContext context)
+    public CategoryRepository(FlashyLearnContext context)
     {
-        _dbConnection = dbConnection;
         _context = context;
     }
 
@@ -38,9 +35,9 @@ public class CategoryRepository : ICategoryRepository
     {
         var categories = new List<Category>();
         if (request.UserId is null)
-            categories = (await _dbConnection.QueryAsync<Category>(@$"SELECT * FROM ""Category""")).ToList();
+            categories = (await _context.Database.GetDbConnection().QueryAsync<Category>(@$"SELECT * FROM ""Category""")).ToList();
         else
-            categories = (await _dbConnection.QueryAsync<Category>(@$"SELECT * FROM ""Category"" WHERE ""UserId""=@UserID", new {UserID = request.UserId})).ToList();
+            categories = (await _context.Database.GetDbConnection().QueryAsync<Category>(@$"SELECT * FROM ""Category"" WHERE ""UserId""=@UserID", new {UserID = request.UserId})).ToList();
 
         var categoriesDto = categories.Select(category => new CategoryDto {CategoryID = category.Id, Name = category.Name}).ToList();
 

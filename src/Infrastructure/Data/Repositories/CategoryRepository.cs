@@ -5,6 +5,7 @@ using Application.Categories.Queries.AllCategories;
 using Application.Common.Interfaces;
 using Dapper;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repositories;
 
@@ -19,20 +20,14 @@ public class CategoryRepository : ICategoryRepository
         _context = context;
     }
 
-    public Task<Category?> Get(Expression<Func<Category?, bool>> predicate, CancellationToken cancellationToken)
+    public async Task<Category?> Get(Expression<Func<Category?, bool>> predicate, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await _context.Set<Category>().FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
-    public Task CreateAsync(Category category)
-    {
-        throw new NotImplementedException();
-    }
+    public void Create(Category category) => Category.Create(category.Id, category.Name, category.UserID);
 
-    public Task DeleteAsync(Category category)
-    {
-        throw new NotImplementedException();
-    }
+    public void Delete(Category category) => _context.Remove(category);
 
     public Task UpdateAsync(int id, Category category)
     {

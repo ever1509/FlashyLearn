@@ -10,6 +10,6 @@ public interface ICategoryRepository
     Task<Category?> Get(Expression<Func<Category?, bool>> predicate, CancellationToken cancellationToken);
     void Create(Category category);
     void Delete(Category category);
-    Task UpdateAsync(int id, Category category);
+    Task UpdateAsync(Guid id, Category category, CancellationToken cancellationToken);
     Task<List<CategoryDto>> GetCategories(AllCategories request, CancellationToken cancellationToken);
 }

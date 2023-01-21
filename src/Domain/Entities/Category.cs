@@ -20,4 +20,10 @@ public sealed class Category : BaseEntity
     {
         return new Category(id, name, userId);
     }
+
+    public void Update(string name, Guid userId)
+    {
+        Name = name;
+        UserID = userId;
+    }
 }

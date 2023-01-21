@@ -11,11 +11,7 @@ namespace Infrastructure.Data.Repositories;
 public class CategoryRepository : ICategoryRepository
 {
     private readonly FlashyLearnContext _context;
-
-    public CategoryRepository(FlashyLearnContext context)
-    {
-        _context = context;
-    }
+    public CategoryRepository(FlashyLearnContext context) => _context = context;
 
     public async Task<Category?> Get(Expression<Func<Category?, bool>> predicate, CancellationToken cancellationToken)
     {
@@ -26,9 +22,14 @@ public class CategoryRepository : ICategoryRepository
 
     public void Delete(Category category) => _context.Remove(category);
 
-    public Task UpdateAsync(int id, Category category)
+    public async Task UpdateAsync(Guid id, Category category, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var entity = await Get(x => x.Id == id, cancellationToken);
+
+        if (entity is null)
+            throw new Exception($"Category not found with id {id}");
+        
+        entity.Update(category.Name, category.UserID);
     }
 
     public async Task<List<CategoryDto>> GetCategories(AllCategories request, CancellationToken cancellationToken)

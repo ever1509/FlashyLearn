@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using Application.Common.Interfaces;
 using Application.FlashCards.Dtos;
 using Application.FlashCards.Queries.RunFlashCards;
+using Dapper;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,34 +17,24 @@ public class FlashCardRepository : IFlashCardRepository
     public async Task<FlashCard?> Get(Expression<Func<FlashCard?, bool>> predicate, CancellationToken cancellationToken) =>
         await _context.Set<FlashCard>().FirstOrDefaultAsync(predicate, cancellationToken);
     public async Task CreateAsync(FlashCard flashCard) => await _context.Set<FlashCard>().AddAsync(flashCard);
-    public Task DeleteAsync(FlashCard flashCard)
+    public void Delete(FlashCard flashCard) => _context.Remove(flashCard);
+
+    public async Task UpdateAsync(Guid id, FlashCard flashCard, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var entity = await Get(x => x.Id == id, cancellationToken);
+        if (entity is null)
+            throw new Exception($"Not found flashcard with id {id}");
+        entity.Update(flashCard.FrontText, flashCard.FrontText, flashCard.CategoryID, flashCard.Frequency);
     }
 
-    public Task UpdateAsync(int id, FlashCard flashCard)
+    public async Task<List<FlashCardDto>> RunFlashCards(RunFlashCards request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-    }
+        var flashCards = (await _context.Database.GetDbConnection()
+            .QueryAsync<FlashCard>(@$"SELECT * FROM ""FlashCards"" where ""Frequency""=@frequency", new { frequency = request.Frequency})).ToList();
 
-    public Task<List<FlashCardDto>> RunFlashCards(RunFlashCards request, CancellationToken cancellationToken)
-    {
-        var flashCardsDto = new List<FlashCardDto>();
+        var flashCardsDto = flashCards
+            .Select(flashCard => new FlashCardDto {FrontText = flashCard.FrontText, BackText = flashCard.BackText, CategoryId = flashCard.CategoryID.ToString()}).ToList();
 
-        // var flashCards = await _context.FlashCards.Where(x=>x.Frequency == request.Frequency).ToListAsync(cancellationToken);
-        //
-        //
-        // foreach (var flashCard in flashCards)
-        // {
-        //     flashCardsDto.Add(new FlashCardDto
-        //     {
-        //         FrontText = flashCard.FrontText,
-        //         BackText = flashCard.BackText,
-        //         CategoryId = flashCard.CategoryID.ToString()
-        //     });
-        // }
-        
-        //return Task.FromResult(flashCardsDto);
-        throw new NotImplementedException();
+        return await Task.FromResult(flashCardsDto);
     }
 }

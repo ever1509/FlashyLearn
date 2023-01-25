@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.PostgresSQL.Mappings
+namespace Infrastructure.Data.Mappings
 {
     public class CategoryMap : IEntityTypeConfiguration<Category>
     {
@@ -12,9 +12,7 @@ namespace Infrastructure.Data.PostgresSQL.Mappings
             builder.Property(e => e.Id).HasColumnType("uuid");
             builder.Property(e => e.Name).HasColumnName("Name");
             builder.Property(e => e.Name).HasColumnType("text");
-            builder.Property(e => e.UserID).IsRequired().HasColumnType("uuid");
-
-            builder.OwnsMany(category => category.FlashCards);
+            builder.Property(e => e.UserId).IsRequired().HasColumnType("uuid");
         }
     }
 }

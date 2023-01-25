@@ -21,7 +21,7 @@ public class FlashCardRepository : IFlashCardRepository
 
     public async Task UpdateAsync(Guid id, FlashCard flashCard, CancellationToken cancellationToken)
     {
-        var entity = await Get(x => x.Id == id, cancellationToken);
+        var entity = await Get(x => x.FlashCardId == id, cancellationToken);
         if (entity is null)
             throw new Exception($"Not found flashcard with id {id}");
         entity.Update(flashCard.FrontText, flashCard.FrontText, flashCard.CategoryID, flashCard.Frequency);

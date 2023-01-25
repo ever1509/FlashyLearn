@@ -32,7 +32,7 @@ public class CreateFlashCardCommandHandler : IRequestHandler<CreateFlashCardComm
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return newFlashCard.Id.ToString();
+        return newFlashCard.FlashCardId.ToString();
 
     }
 }

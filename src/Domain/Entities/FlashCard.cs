@@ -2,20 +2,24 @@ using Domain.Enums;
 
 namespace Domain.Entities;
 
-public sealed class FlashCard : BaseEntity
+public sealed class FlashCard 
 {
-    private FlashCard(Guid flashCardId, string frontText, string backText, DateTime createdDate, Frequency frequency, Guid categoryId) : base(flashCardId)
+    public FlashCard()
     {
+        FlashCardTags = new HashSet<FlashCardTag>();
+        Tags = new HashSet<Tag>();
+    }
+    private FlashCard(Guid flashCardId, string frontText, string backText, DateTime createdDate, Frequency frequency, Guid categoryId)
+    {
+        FlashCardId = flashCardId;
         FrontText = frontText;
         BackText = backText;
         CreatedDate = createdDate;
         Frequency = frequency;
         CategoryID = categoryId;
     }
-    public FlashCard()
-    {
-        Tags = new HashSet<Tag>();
-    }
+
+    public Guid FlashCardId { get; private set; }
     public string FrontText { get; private set; } = string.Empty;
     public string BackText { get; private set; } = string.Empty;
     public DateTime CreatedDate { get; private set; }

@@ -1,16 +1,19 @@
 namespace Domain.Entities;
 
-public sealed class Tag : BaseEntity
+public sealed class Tag
 {
-    private Tag(Guid tagId, string description) : base(tagId)
-    {
-        Description = description;
-    }
-    private Tag()
+    public Tag()
     {
         FlashCards = new HashSet<FlashCard>();
         FlashCardTags = new HashSet<FlashCardTag>();
     }
+    private Tag(Guid tagId, string description)
+    {
+        TagId = tagId;
+        Description = description;
+    }
+
+    public Guid TagId { get; private set; }
     public string Description { get; private set; } = string.Empty;
 
     public ICollection<FlashCard> FlashCards { get; private set; }

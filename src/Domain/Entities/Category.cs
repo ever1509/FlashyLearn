@@ -2,17 +2,17 @@ namespace Domain.Entities;
 
 public sealed class Category : BaseEntity
 {
-    private Category(Guid id, string name, Guid userId) : base(id)
-    {
-        Name = name;
-        UserID = userId;
-    }
-    private Category()
+    public Category()
     {
         FlashCards = new HashSet<FlashCard>();
     }
+    private Category(Guid id, string name, Guid userId) : base(id)
+    {
+        Name = name;
+        UserId = userId;
+    }
     public string Name { get; private set; } = string.Empty;
-    public Guid UserID { get; private set; }
+    public Guid UserId { get; private set; }
 
     public ICollection<FlashCard> FlashCards { get; set; }
     
@@ -24,6 +24,6 @@ public sealed class Category : BaseEntity
     public void Update(string name, Guid userId)
     {
         Name = name;
-        UserID = userId;
+        UserId = userId;
     }
 }

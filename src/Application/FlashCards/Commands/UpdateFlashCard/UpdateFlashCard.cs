@@ -26,14 +26,17 @@ public class UpdateFlashCardHandler : IRequestHandler<UpdateFlashCard, string>
 
     public async Task<string> Handle(UpdateFlashCard request, CancellationToken cancellationToken)
     {
-        var entity = await _repository.Get(x => x != null && x.FlashCardId == Guid.Parse( request.Id), cancellationToken: cancellationToken);
+        var entity = await _repository.Get(x => x != null && x.FlashCardID == Guid.Parse( request.Id), cancellationToken: cancellationToken);
         
         if (entity is null)
             throw new Exception("Invalid ID");
 
-        entity.Update(request.FrontText, request.BackText, Guid.Parse(request.CategoryId), request.Frequency);
+        entity.FrontText = request.FrontText;
+        entity.CategoryID = Guid.Parse(request.CategoryId);
+        entity.Frequency = request.Frequency;
+        //entity.Update(request.FrontText, request.BackText, Guid.Parse(request.CategoryId), request.Frequency);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return entity.FlashCardId.ToString();
+        return entity.FlashCardID.ToString();
     }
 }

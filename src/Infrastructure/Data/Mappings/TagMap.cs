@@ -8,8 +8,8 @@ namespace Infrastructure.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Tag> builder)
         {
-            builder.HasKey(e => e.TagId);
-            builder.Property(e => e.TagId).HasColumnType("uuid");
+            builder.HasKey(e => e.TagID);
+            builder.Property(e => e.TagID).HasColumnType("uuid");
             builder.Property(e => e.Description).HasColumnType("text");
             
         }

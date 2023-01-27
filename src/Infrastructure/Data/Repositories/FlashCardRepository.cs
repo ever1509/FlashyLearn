@@ -21,10 +21,15 @@ public class FlashCardRepository : IFlashCardRepository
 
     public async Task UpdateAsync(Guid id, FlashCard flashCard, CancellationToken cancellationToken)
     {
-        var entity = await Get(x => x.FlashCardId == id, cancellationToken);
+        var entity = await Get(x => x.FlashCardID == id, cancellationToken);
         if (entity is null)
             throw new Exception($"Not found flashcard with id {id}");
-        entity.Update(flashCard.FrontText, flashCard.FrontText, flashCard.CategoryID, flashCard.Frequency);
+
+        entity.FrontText = flashCard.FrontText;
+        entity.BackText = flashCard.BackText;
+        entity.CategoryID = flashCard.CategoryID;
+        entity.Frequency = flashCard.Frequency;
+        //entity.Update(flashCard.FrontText, flashCard.FrontText, flashCard.CategoryID, flashCard.Frequency);
     }
 
     public async Task<List<FlashCardDto>> RunFlashCards(RunFlashCards request, CancellationToken cancellationToken)

@@ -18,18 +18,20 @@ public class CategoryRepository : ICategoryRepository
         return await _context.Set<Category>().FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
-    public void Create(Category category) => Category.Create(category.Id, category.Name, category.UserId);
+    public void Create(Category category) => new Category() { CategoryID = category.CategoryID, Name = category.Name, UserID = category.UserID}; //Category.Create(category.Id, category.Name, category.UserId);
 
     public void Delete(Category category) => _context.Remove(category);
 
     public async Task UpdateAsync(Guid id, Category category, CancellationToken cancellationToken)
     {
-        var entity = await Get(x => x.Id == id, cancellationToken);
+        var entity = await Get(x => x.CategoryID == id, cancellationToken);
 
         if (entity is null)
             throw new Exception($"Category not found with id {id}");
-        
-        entity.Update(category.Name, category.UserId);
+
+        entity.Name = category.Name;
+        entity.UserID = category.UserID;
+        //entity.Update(category.Name, category.UserId);
     }
 
     public async Task<List<CategoryDto>> GetCategories(AllCategories request, CancellationToken cancellationToken)
@@ -40,7 +42,7 @@ public class CategoryRepository : ICategoryRepository
         else
             categories = (await _context.Database.GetDbConnection().QueryAsync<Category>(@$"SELECT * FROM ""Category"" WHERE ""UserId""=@UserID", new {UserID = request.UserId})).ToList();
 
-        var categoriesDto = categories.Select(category => new CategoryDto {CategoryID = category.Id, Name = category.Name}).ToList();
+        var categoriesDto = categories.Select(category => new CategoryDto {CategoryID = category.CategoryID, Name = category.Name}).ToList();
 
         return await Task.FromResult(categoriesDto
             .Skip((request.PageNumber -1)* request.PageSize)

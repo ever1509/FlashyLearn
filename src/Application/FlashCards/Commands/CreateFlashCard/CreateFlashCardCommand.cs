@@ -25,14 +25,22 @@ public class CreateFlashCardCommandHandler : IRequestHandler<CreateFlashCardComm
 
     public async Task<string> Handle(CreateFlashCardCommand request, CancellationToken cancellationToken)
     {
-        var newFlashCard = FlashCard.Create(Guid.NewGuid(), request.BackText, request.FrontText,
-            DateTime.UtcNow, Frequency.Monthly, Guid.Parse(request.CategoryID));
+        var newFlashCard = new FlashCard()
+        {
+            FlashCardID = Guid.NewGuid(),
+            BackText = request.BackText,
+            FrontText = request.FrontText,
+            CreatedDate = DateTime.UtcNow,
+            CategoryID = Guid.Parse(request.CategoryID)
+        }; //FlashCard.Create(Guid.NewGuid(), request.BackText, request.FrontText,
+            //DateTime.UtcNow, Frequency.Monthly, Guid.Parse(request.CategoryID));
 
         await _repository.CreateAsync(newFlashCard);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return newFlashCard.FlashCardId.ToString();
+        return newFlashCard.FlashCardID.ToString();
+        //return newFlashCard.FlashCardId.ToString();
 
     }
 }

@@ -1,29 +1,15 @@
 namespace Domain.Entities;
 
-public sealed class Category : BaseEntity
+public class Category
 {
     public Category()
     {
         FlashCards = new HashSet<FlashCard>();
     }
-    private Category(Guid id, string name, Guid userId) : base(id)
-    {
-        Name = name;
-        UserId = userId;
-    }
-    public string Name { get; private set; } = string.Empty;
-    public Guid UserId { get; private set; }
 
-    public ICollection<FlashCard> FlashCards { get; set; }
-    
-    public static Category Create(Guid id, string name, Guid userId)
-    {
-        return new Category(id, name, userId);
-    }
+    public Guid CategoryID { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public Guid UserID { get; set; }
 
-    public void Update(string name, Guid userId)
-    {
-        Name = name;
-        UserId = userId;
-    }
+    public virtual ICollection<FlashCard> FlashCards { get; set; }
 }

@@ -18,7 +18,7 @@ public class CategoryRepository : ICategoryRepository
         return await _context.Set<Category>().FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
-    public void Create(Category category) => new Category() { CategoryID = category.CategoryID, Name = category.Name, UserID = category.UserID}; //Category.Create(category.Id, category.Name, category.UserId);
+    public Category Create(Category category) => Category.Create(category.CategoryID, category.Name,category.UserID);
 
     public void Delete(Category category) => _context.Remove(category);
 
@@ -29,9 +29,7 @@ public class CategoryRepository : ICategoryRepository
         if (entity is null)
             throw new Exception($"Category not found with id {id}");
 
-        entity.Name = category.Name;
-        entity.UserID = category.UserID;
-        //entity.Update(category.Name, category.UserId);
+        entity.Update(category.Name, category.UserID);
     }
 
     public async Task<List<CategoryDto>> GetCategories(AllCategories request, CancellationToken cancellationToken)

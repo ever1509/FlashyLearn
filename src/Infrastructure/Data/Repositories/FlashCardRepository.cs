@@ -25,11 +25,7 @@ public class FlashCardRepository : IFlashCardRepository
         if (entity is null)
             throw new Exception($"Not found flashcard with id {id}");
 
-        entity.FrontText = flashCard.FrontText;
-        entity.BackText = flashCard.BackText;
-        entity.CategoryID = flashCard.CategoryID;
-        entity.Frequency = flashCard.Frequency;
-        //entity.Update(flashCard.FrontText, flashCard.FrontText, flashCard.CategoryID, flashCard.Frequency);
+        entity.Update(flashCard.FrontText, flashCard.BackText, flashCard.Frequency, flashCard.CategoryID);
     }
 
     public async Task<List<FlashCardDto>> RunFlashCards(RunFlashCards request, CancellationToken cancellationToken)

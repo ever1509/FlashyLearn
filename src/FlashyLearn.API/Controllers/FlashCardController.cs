@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FlashyLearn.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/flashcards")]
 public class FlashCardController : ControllerBase
 {
     private readonly IMediator _mediator;

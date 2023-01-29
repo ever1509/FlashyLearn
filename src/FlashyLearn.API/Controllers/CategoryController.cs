@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FlashyLearn.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/categories")]
 public class CategoryController : ControllerBase
 {
     private readonly IMediator _mediator;

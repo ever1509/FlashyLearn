@@ -1,3 +1,4 @@
+using Application.Common.Interfaces;
 using Application.Tags.Dtos;
 using MediatR;
 
@@ -10,8 +11,15 @@ public class AllTags : IRequest<List<TagDto>>
 
 public class AllTagsHandler : IRequestHandler<AllTags, List<TagDto>>
 {
-    public Task<List<TagDto>> Handle(AllTags request, CancellationToken cancellationToken)
+    private readonly ITagRepository _tagRepository;
+
+    public AllTagsHandler(ITagRepository tagRepository)
     {
-        throw new NotImplementedException();
+        _tagRepository = tagRepository;
+    }
+
+    public async Task<List<TagDto>> Handle(AllTags request, CancellationToken cancellationToken)
+    {
+        return await _tagRepository.GetTags(request, cancellationToken);
     }
 }

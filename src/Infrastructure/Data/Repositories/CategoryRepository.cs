@@ -34,15 +34,13 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<List<CategoryDto>> GetCategories(AllCategories request, CancellationToken cancellationToken)
     {
-        var categories = new List<Category>();
+        var categoryDtoList = new List<CategoryDto>();
         if (request.UserId is null)
-            categories = (await _context.Database.GetDbConnection().QueryAsync<Category>(@$"SELECT * FROM ""Category""")).ToList();
+            categoryDtoList = (await _context.Database.GetDbConnection().QueryAsync<CategoryDto>(@$"SELECT ""CategoryID"", ""Name"" FROM ""Category""")).ToList();
         else
-            categories = (await _context.Database.GetDbConnection().QueryAsync<Category>(@$"SELECT * FROM ""Category"" WHERE ""UserId""=@UserID", new {UserID = request.UserId})).ToList();
+            categoryDtoList = (await _context.Database.GetDbConnection().QueryAsync<CategoryDto>(@$"SELECT ""CategoryID"", ""Name"" FROM ""Category"" WHERE ""UserId""=@UserID", new {UserID = request.UserId})).ToList();
 
-        var categoriesDto = categories.Select(category => new CategoryDto {CategoryID = category.CategoryID, Name = category.Name}).ToList();
-
-        return await Task.FromResult(categoriesDto
+        return await Task.FromResult(categoryDtoList
             .Skip((request.PageNumber -1)* request.PageSize)
             .Take(request.PageSize).ToList());
         

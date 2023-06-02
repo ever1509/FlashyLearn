@@ -18,7 +18,10 @@ builder.Services.AddCors(p => p.AddPolicy("flashy-learn", policyBuilder =>
 }));
 
 builder.Services.AddGraphQLServer()
-    .AddQueryType<Query>();
+    .AddQueryType<Query>()
+    .AddFiltering();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

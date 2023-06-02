@@ -29,6 +29,7 @@ public static class InfrastructureInstaller
 
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IFlashCardRepository, FlashCardRepository>();
+        services.AddScoped<ITagRepository, TagRepository>();
         return services;
     }
 }

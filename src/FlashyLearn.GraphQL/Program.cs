@@ -9,14 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//services cors
-builder.Services.AddCors(p => p.AddPolicy("flashy-learn", policyBuilder =>
-{
-    policyBuilder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));
 
+builder.Services.AddCors(p =>
+{
+    var frontedURL = builder.Configuration.GetValue<string>("frontend_url") ?? "*";
+    p.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins(frontedURL).AllowAnyMethod().AllowAnyHeader();
+    });
+});
 builder.Services.AddGraphQLServer()
     .AddQueryType<Query>()
     .AddFiltering();

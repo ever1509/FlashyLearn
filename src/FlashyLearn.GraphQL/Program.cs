@@ -1,4 +1,5 @@
 using Application;
+using GraphQL.Server.Ui.Voyager;
 using Infrastructure;
 using Infrastructure.GraphQL;
 
@@ -43,5 +44,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGraphQL();
+app.UseGraphQLVoyager("/graphql-voyager", new VoyagerOptions() {GraphQLEndPoint = "graphql"});
 
 app.Run();

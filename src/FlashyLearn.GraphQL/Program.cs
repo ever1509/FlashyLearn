@@ -1,7 +1,9 @@
 using Application;
 using GraphQL.Server.Ui.Voyager;
 using Infrastructure;
+using Infrastructure.Data;
 using Infrastructure.GraphQL;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,7 @@ builder.Services.AddCors(p =>
 });
 builder.Services.AddGraphQLServer()
     .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
     .AddFiltering();
 
 
@@ -45,5 +48,18 @@ app.MapControllers();
 
 app.MapGraphQL();
 app.UseGraphQLVoyager("/graphql-voyager", new VoyagerOptions() {GraphQLEndPoint = "graphql"});
+
+// in case of migration
+try
+{
+    var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<FlashyLearnContext>();
+    context.Database.Migrate();
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+    throw;
+}
 
 app.Run();

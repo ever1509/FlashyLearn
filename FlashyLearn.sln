@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{F27582AA-2A57-426A-BE1C-84404E75A6ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashyLearn.API", "src\FlashyLearn.API\FlashyLearn.API.csproj", "{EF82E4A6-3E8A-4A6B-AC01-6DB299C6D98A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashyLearn.API.REST", "src\FlashyLearn.API.REST\FlashyLearn.API.REST.csproj", "{EF82E4A6-3E8A-4A6B-AC01-6DB299C6D98A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashyLearn.GraphQL", "src\FlashyLearn.GraphQL\FlashyLearn.GraphQL.csproj", "{826896C1-0966-4543-B2BE-B61F3F646800}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashyLearn.API.GraphQL", "src\FlashyLearn.API.GraphQL\FlashyLearn.API.GraphQL.csproj", "{826896C1-0966-4543-B2BE-B61F3F646800}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashyLearn.Application.UnitTests", "tests\FlashyLearn.Application.UnitTests\FlashyLearn.Application.UnitTests.csproj", "{3FA9E3AD-E91E-4BDA-8E30-B355C21138BB}"
 EndProject

@@ -5,7 +5,7 @@ using Application.Categories.Queries.AllCategories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FlashyLearn.API.Controllers;
+namespace FlashyLearn.API.REST.Controllers;
 
 [ApiController]
 [Route("api/v1/categories")]

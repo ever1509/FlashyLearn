@@ -1,14 +1,15 @@
 using Application.Common.Interfaces;
+using Application.FlashCards.Dtos;
 using MediatR;
 
 namespace Application.FlashCards.Commands.DeleteFlashCard;
 
-public class DeleteFlashCard : IRequest<Unit>
+public class DeleteFlashCard : IRequest<FlashCardResponseDto>
 {
     public string Id { get; set; } = string.Empty;
 }
 
-public class DeleteFlashCardHandler : IRequestHandler<DeleteFlashCard, Unit>
+public class DeleteFlashCardHandler : IRequestHandler<DeleteFlashCard, FlashCardResponseDto>
 {
     private readonly IFlashCardRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
@@ -19,7 +20,7 @@ public class DeleteFlashCardHandler : IRequestHandler<DeleteFlashCard, Unit>
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Unit> Handle(DeleteFlashCard request, CancellationToken cancellationToken)
+    public async Task<FlashCardResponseDto> Handle(DeleteFlashCard request, CancellationToken cancellationToken)
     {
         var id = Guid.Parse(request.Id);
         
@@ -29,7 +30,12 @@ public class DeleteFlashCardHandler : IRequestHandler<DeleteFlashCard, Unit>
 
         _repository.Delete(entity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        
-        return Unit.Value;
+
+        return new FlashCardResponseDto()
+        {
+            FlashCardId = entity.FlashCardID,
+            BackText = entity.BackText,
+            FrontText = entity.FrontText
+        };
     }
 }

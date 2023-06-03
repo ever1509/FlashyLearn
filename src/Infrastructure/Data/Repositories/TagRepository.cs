@@ -1,4 +1,5 @@
 using Application.Common.Interfaces;
+using Application.Tags.Commands.CreateTag;
 using Application.Tags.Dtos;
 using Application.Tags.Queries.AllTags;
 using Dapper;
@@ -31,5 +32,16 @@ public class TagRepository: ITagRepository
         }
 
         return tagDtoList;
+    }
+
+    public async Task<TagResponseDto> CreateTag(Tag entity, CancellationToken cancellationToken)
+    {
+        await _context.AddAsync(entity, cancellationToken);
+
+        return new TagResponseDto
+        {
+            TagId = entity.TagID,
+            Description = entity.Description
+        };
     }
 }

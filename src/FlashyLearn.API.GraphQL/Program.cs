@@ -47,6 +47,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGraphQL();
+
 app.UseGraphQLVoyager("/graphql-voyager", new VoyagerOptions() {GraphQLEndPoint = "graphql"});
 
 // in case of migration

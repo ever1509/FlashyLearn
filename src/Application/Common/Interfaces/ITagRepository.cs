@@ -6,4 +6,6 @@ namespace Application.Common.Interfaces;
 public interface ITagRepository
 {
     Task<List<TagDto>> GetTags(AllTags request, CancellationToken cancellationToken);
+
+    Task<TagResponseDto> CreateTag(Tag entity, CancellationToken cancellationToken);
 }

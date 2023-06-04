@@ -18,9 +18,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(p =>
 {
     //var frontedURL = builder.Configuration.GetValue<string>("frontend_url") ?? "*";
-    p.AddDefaultPolicy(builder =>
+    p.AddPolicy("flashy-learn" ,builder =>
     {
-        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        builder.AllowAnyHeader();
+        builder.AllowAnyOrigin();
+        builder.AllowAnyMethod();
     });
 });
 builder.Services.AddGraphQLServer()

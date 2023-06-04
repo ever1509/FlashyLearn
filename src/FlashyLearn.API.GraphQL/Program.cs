@@ -30,8 +30,17 @@ builder.Services.AddGraphQLServer()
     .AddMutationType<Mutation>()
     .AddFiltering();
 
+//configuration to call react app
+builder.Services.AddMvc(option => option.EnableEndpointRouting = false);
 
 var app = builder.Build();
+
+//-----Configuration to use React App-------
+app.UseRouting();
+app.UseMvc();
+app.UseDefaultFiles();
+app.UseStaticFiles();
+//------------------------------------------
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -41,18 +50,19 @@ if (app.Environment.IsDevelopment())
 //app cors
 app.UseCors("flashy-learn");
 
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
 app.MapGraphQL();
 
 app.UseGraphQLVoyager("/graphql-voyager", new VoyagerOptions() {GraphQLEndPoint = "graphql"});
 
-// in case of migration
+
+//------Configuration to Use Endpoint to call React App from Index Controller
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapFallbackToController("Index", "WebSite");
+});
+
+
+// Migrate Database
 try
 {
     var scope = app.Services.CreateScope();

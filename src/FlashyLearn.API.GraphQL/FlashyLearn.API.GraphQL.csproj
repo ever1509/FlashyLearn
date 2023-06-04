@@ -22,4 +22,19 @@
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\asset-manifest.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
+      <_ContentIncludedByDefault Remove="wwwroot\index.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\logo192.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\logo512.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\manifest.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\robots.txt" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\css\main.803382a8.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\css\main.803382a8.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\js\main.5a5127b4.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\js\main.5a5127b4.js.LICENSE.txt" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\js\main.5a5127b4.js.map" />
+    </ItemGroup>
+
 </Project>

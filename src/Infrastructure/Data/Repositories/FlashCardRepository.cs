@@ -30,12 +30,15 @@ public class FlashCardRepository : IFlashCardRepository
 
     public async Task<List<FlashCardDto>> RunFlashCards(RunFlashCards request, CancellationToken cancellationToken)
     {
-        var flashCards = (await _context.Database.GetDbConnection()
-            .QueryAsync<FlashCard>(@$"SELECT * FROM ""FlashCards"" where ""Frequency""=@frequency", new { frequency = request.Frequency})).ToList();
-
-        var flashCardsDto = flashCards
-            .Select(flashCard => new FlashCardDto {FrontText = flashCard.FrontText, BackText = flashCard.BackText, CategoryId = flashCard.CategoryID.ToString()}).ToList();
-
-        return await Task.FromResult(flashCardsDto);
+        var flashCardDtoList = (await _context.Database.GetDbConnection()
+            .QueryAsync<FlashCardDto>(@$"
+                            SELECT ""FlashCardID""
+                            ,""FrontText""
+                            ,""BackText""
+                            ,""Frequency""
+                            ,""CategoryID"" FROM 
+                           ""FlashCards"" where ""Frequency""=@frequency", new { frequency = request.Frequency})).ToList();
+        
+        return await Task.FromResult(flashCardDtoList);
     }
 }

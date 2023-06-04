@@ -4,6 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -35,6 +36,12 @@
       <_ContentIncludedByDefault Remove="wwwroot\static\js\main.5a5127b4.js" />
       <_ContentIncludedByDefault Remove="wwwroot\static\js\main.5a5127b4.js.LICENSE.txt" />
       <_ContentIncludedByDefault Remove="wwwroot\static\js\main.5a5127b4.js.map" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

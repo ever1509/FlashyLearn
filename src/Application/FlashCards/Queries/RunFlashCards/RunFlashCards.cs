@@ -7,8 +7,7 @@ namespace Application.FlashCards.Queries.RunFlashCards;
 
 public class RunFlashCards : IRequest<List<FlashCardDto>>
 {
-    public string? UserId { get; set; }
-    public Frequency Frequency { get; set; }
+    //public string? UserId { get; set; }
 }
 
 public class RunFlashCardsHandler : IRequestHandler<RunFlashCards, List<FlashCardDto>>

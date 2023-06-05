@@ -1,0 +1,9 @@
+query RunFlashards {
+  runFlashCards{
+    categoryID,
+    flashCardID,
+    frontText,
+    backText,
+    frequency
+  }
+}

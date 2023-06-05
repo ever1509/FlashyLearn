@@ -37,7 +37,7 @@ public class FlashCardRepository : IFlashCardRepository
                             ,""BackText""
                             ,""Frequency""
                             ,""CategoryID"" FROM 
-                           ""FlashCards"" where ""Frequency""=@frequency", new { frequency = request.Frequency})).ToList();
+                           ""FlashCard""")).ToList();
         
         return await Task.FromResult(flashCardDtoList);
     }

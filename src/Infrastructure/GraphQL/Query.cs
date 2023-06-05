@@ -20,7 +20,7 @@ public class Query
         => await mediator.Send(new AllTags() {FlashCardId = flashCardId});
 
     [UseFiltering]
-    public async Task<List<FlashCardDto>> RunFlashCards([Service] IMediator mediator, string userId, Frequency frequency) 
-        => await mediator.Send(new RunFlashCards() {UserId = userId, Frequency = frequency});
+    public async Task<List<FlashCardDto>> RunFlashCards([Service] IMediator mediator) 
+        => await mediator.Send(new RunFlashCards());
     
 }

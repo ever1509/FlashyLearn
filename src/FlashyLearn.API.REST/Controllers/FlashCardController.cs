@@ -21,9 +21,9 @@ public class FlashCardController : ControllerBase
     }
 
     [HttpGet("run-flash-cards")]
-    public async Task<ActionResult<List<FlashCardDto>>> RunFlashCards(Frequency frequency, string? userId = null)
+    public async Task<ActionResult<List<FlashCardDto>>> RunFlashCards()
     {
-        return await _mediator.Send(new RunFlashCards() { Frequency = frequency, UserId = userId });
+        return await _mediator.Send(new RunFlashCards());
     }
     
     [HttpPost]

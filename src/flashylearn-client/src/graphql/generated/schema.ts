@@ -57,14 +57,18 @@ export type DeleteFlashCardInput = {
 export type FlashCardDto = {
   __typename?: 'FlashCardDto';
   backText: Scalars['String'];
-  categoryId: Scalars['String'];
+  categoryID: Scalars['UUID'];
+  flashCardID: Scalars['UUID'];
+  frequency: Frequency;
   frontText: Scalars['String'];
 };
 
 export type FlashCardDtoFilterInput = {
   and?: InputMaybe<Array<FlashCardDtoFilterInput>>;
   backText?: InputMaybe<StringOperationFilterInput>;
-  categoryId?: InputMaybe<StringOperationFilterInput>;
+  categoryID?: InputMaybe<UuidOperationFilterInput>;
+  flashCardID?: InputMaybe<UuidOperationFilterInput>;
+  frequency?: InputMaybe<FrequencyOperationFilterInput>;
   frontText?: InputMaybe<StringOperationFilterInput>;
   or?: InputMaybe<Array<FlashCardDtoFilterInput>>;
 };
@@ -81,6 +85,13 @@ export enum Frequency {
   Monthly = 'MONTHLY',
   Weekly = 'WEEKLY'
 }
+
+export type FrequencyOperationFilterInput = {
+  eq?: InputMaybe<Frequency>;
+  in?: InputMaybe<Array<Frequency>>;
+  neq?: InputMaybe<Frequency>;
+  nin?: InputMaybe<Array<Frequency>>;
+};
 
 export type IntOperationFilterInput = {
   eq?: InputMaybe<Scalars['Int']>;
@@ -154,8 +165,6 @@ export type QueryAllTagsArgs = {
 
 
 export type QueryRunFlashCardsArgs = {
-  frequency: Frequency;
-  userId: Scalars['String'];
   where?: InputMaybe<FlashCardDtoFilterInput>;
 };
 
@@ -215,6 +224,11 @@ export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCategoriesQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'CategoryDto', categoryID: any, name: string }> };
 
+export type RunFlashardsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RunFlashardsQuery = { __typename?: 'Query', runFlashCards: Array<{ __typename?: 'FlashCardDto', categoryID: any, flashCardID: any, frontText: string, backText: string, frequency: Frequency }> };
+
 
 export const GetCategoriesDocument = gql`
     query GetCategories {
@@ -251,3 +265,41 @@ export function useGetCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetCategoriesQueryHookResult = ReturnType<typeof useGetCategoriesQuery>;
 export type GetCategoriesLazyQueryHookResult = ReturnType<typeof useGetCategoriesLazyQuery>;
 export type GetCategoriesQueryResult = Apollo.QueryResult<GetCategoriesQuery, GetCategoriesQueryVariables>;
+export const RunFlashardsDocument = gql`
+    query RunFlashards {
+  runFlashCards {
+    categoryID
+    flashCardID
+    frontText
+    backText
+    frequency
+  }
+}
+    `;
+
+/**
+ * __useRunFlashardsQuery__
+ *
+ * To run a query within a React component, call `useRunFlashardsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRunFlashardsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRunFlashardsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRunFlashardsQuery(baseOptions?: Apollo.QueryHookOptions<RunFlashardsQuery, RunFlashardsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RunFlashardsQuery, RunFlashardsQueryVariables>(RunFlashardsDocument, options);
+      }
+export function useRunFlashardsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RunFlashardsQuery, RunFlashardsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RunFlashardsQuery, RunFlashardsQueryVariables>(RunFlashardsDocument, options);
+        }
+export type RunFlashardsQueryHookResult = ReturnType<typeof useRunFlashardsQuery>;
+export type RunFlashardsLazyQueryHookResult = ReturnType<typeof useRunFlashardsLazyQuery>;
+export type RunFlashardsQueryResult = Apollo.QueryResult<RunFlashardsQuery, RunFlashardsQueryVariables>;

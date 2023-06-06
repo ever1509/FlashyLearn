@@ -27,6 +27,11 @@ export default function NavBar(){
                             <Link to="/categories">Categories</Link>
                         </Button>
                     </Box>
+                    <Box sx={{flexGrow:1, display:{xs:'none', md:'flex'}}}>
+                        <Button key="FlashCards" sx={{my:2, color:'white', display:'block '}}>
+                            <Link to="/flashcards">FlasCards</Link>
+                        </Button>
+                    </Box>
                 </Toolbar>
             </Container>
         </AppBar>

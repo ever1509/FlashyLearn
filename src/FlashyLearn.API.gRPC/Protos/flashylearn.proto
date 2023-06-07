@@ -1,0 +1,15 @@
+syntax = "proto3";
+option csharp_namespace = "FlashyLearn.API.gRPC";
+
+
+service FlashyLearn {
+    rpc SayHello (HelloRequest) returns (HelloResponse);
+}
+
+message HelloRequest {
+    string name = 1;
+}
+
+message HelloResponse {
+    string message = 1;
+}

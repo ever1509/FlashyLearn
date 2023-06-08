@@ -63,16 +63,16 @@ app.UseEndpoints(endpoints =>
 
 
 // Migrate Database
-try
-{
-    var scope = app.Services.CreateScope();
-    var context = scope.ServiceProvider.GetRequiredService<FlashyLearnContext>();
-    context.Database.Migrate();
-}
-catch (Exception e)
-{
-    Console.WriteLine(e);
-    throw;
-}
+// try
+// {
+//     var scope = app.Services.CreateScope();
+//     var context = scope.ServiceProvider.GetRequiredService<FlashyLearnContext>();
+//     context.Database.Migrate();
+// }
+// catch (Exception e)
+// {
+//     Console.WriteLine(e);
+//     throw;
+// }
 
 app.Run();

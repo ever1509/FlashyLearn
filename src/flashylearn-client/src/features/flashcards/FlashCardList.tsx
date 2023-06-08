@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { FlashCardDto } from "../../graphql/generated/schema"
-import { AgGridReact } from "ag-grid-react";
+import OmGrid from "../../components/elements/OmGrid";
 
 interface FlashCardProps{
     flashCards: FlashCardDto[]
@@ -40,18 +40,8 @@ export default function FlashCardList({flashCards}: FlashCardProps){
         }
     ]);
 
-    const defaultColDef = useMemo(()=>({
-        sortable: true,
-        filter: true,
-        resizable: true,
-    }), []);
-
-    return (<div className="ag-theme-alpine" style={{height: 500, width: '100%',}}>
-    <AgGridReact 
+    return ( <OmGrid 
         rowData={flashCards}
-        columnDefs={columnsDefs}
-        defaultColDef={defaultColDef}
-
-    />
-</div>)
+        columnsDefs={columnsDefs}
+    />)
 }

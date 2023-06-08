@@ -1,8 +1,6 @@
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { CategoryDto } from "../../graphql/generated/schema";
-import {AgGridReact} from "ag-grid-react";
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+import OmGrid from "../../components/elements/OmGrid";
 
 
 export default function CategoriesList({categories}: CategoryListProps){
@@ -19,21 +17,11 @@ export default function CategoriesList({categories}: CategoryListProps){
         }
     ]);
 
-    const defaultColDef = useMemo(()=>({
-        sortable: true,
-        filter: true,
-        resizable: true,
-
-    }), []);
-
-    return (<div className="ag-theme-alpine" style={{height: 500, width: '100%',}}>
-        <AgGridReact 
+    return (
+        <OmGrid 
             rowData={categories}
-            columnDefs={columnsDefs}
-            defaultColDef={defaultColDef}
-
-        />
-    </div>)
+            columnsDefs={columnsDefs}
+        />)
 }
 
 interface CategoryListProps {

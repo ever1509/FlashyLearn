@@ -1,14 +1,16 @@
 import { Grid, Typography } from "@mui/material";
 import { CategoryDto, useGetCategoriesQuery } from "../../graphql/generated/schema";
 import CategoriesList from "./CategoriesList";
+import OmLoading from "../../components/elements/OmLoading";
+import OmAlert from "../../components/elements/OmAlert";
 export default function CategoriesDashboard(){
     const {data: categoriesData, loading, error } = useGetCategoriesQuery();
     if(loading){
-        return <div>Loading</div>
+        return <OmLoading />
     }
 
     if(error || !categoriesData){
-        return <div>Error...</div>
+        return <OmAlert message="Could not load categories data" />
     }
 
     const categories = categoriesData.allCategories as CategoryDto[];

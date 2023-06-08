@@ -11,15 +11,15 @@ public static class InfrastructureInstaller
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+        
         services.AddDbContextFactory<FlashyLearnContext>(options =>
             options.UseNpgsql(
-                connectionString,
+                configuration.GetConnectionString("FlashyConnPostgresSQL"),
                 b => b.MigrationsAssembly(typeof(FlashyLearnContext).Assembly.FullName)));
 
         services.AddDbContext<FlashyLearnContext>(options =>
             options.UseNpgsql(
-                connectionString,
+                configuration.GetConnectionString("FlashyConnPostgresSQL"),
                 b => b.MigrationsAssembly(typeof(FlashyLearnContext).Assembly.FullName)));
         services.AddScoped<IUnitOfWork>(
             sp => sp.GetRequiredService<IDbContextFactory<FlashyLearnContext>>()

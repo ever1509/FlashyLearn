@@ -23,6 +23,7 @@
     "ag-grid-community": "28.2.0",
     "ag-grid-react": "28.2.0",
     "axios": "^1.2.1",
+    "formik": "^2.2.9",
     "graphql": "16.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -34,7 +35,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild":"mv 'build' ../FlashyLearn.API.GraphQL/wwwroot",
+    "postbuild": "mv 'build' ../FlashyLearn.API.GraphQL/wwwroot",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "codegen": "graphql-codegen --config codegen.ts"

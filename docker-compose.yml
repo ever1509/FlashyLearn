@@ -5,28 +5,30 @@ networks:
     driver: bridge
 
 services:
-  flashylearn:
+  flashylearn-app:
     image: flashylearn:latest
     depends_on:
-      - "postgres_image"
+      - "app_db"
+    container_name: flashylearnapp-services
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8080:80"
     environment:
-      - ConnectionStrings__FlashyConnPostgresSQL=Server=postgres_image; Port=5432; User Id=admin; Password=secret; Database=flashy_db
+      - ConnectionStrings:DefaultConnection=User ID=postgres;Password=postgres;Server=app_db;Port=5432;Database=flashy_db;IntegratedSecurity=true;Pooling=true;
     networks:
       - flashylearn-dev
 
-  postgres_image:
+  app_db:
     image: postgres:latest
+    container_name: app_db
     ports:
-      - "5432:5432"
+      - "5434:5432"
     restart: always
     environment:
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "secret"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
       POSTGRES_DB: "flashy_db"
     networks:
       - flashylearn-dev

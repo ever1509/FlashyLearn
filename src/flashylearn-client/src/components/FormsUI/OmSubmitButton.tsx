@@ -18,7 +18,7 @@ export default function OmSubmitButton({children, otherProps}: OnSubmitButtonPro
         color: 'primary',
         variant: 'contained',
         fullWidth: true,
-        onclick: handleSubmit
+        onClick: handleSubmit
     };
 
     return (<Button {...configButton}  >{children}</Button>)

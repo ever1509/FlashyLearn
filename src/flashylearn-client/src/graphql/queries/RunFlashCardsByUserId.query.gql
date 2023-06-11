@@ -1,0 +1,9 @@
+query RunFlashardById( $id: UUID!) {
+  runFlashCards (where: {flashCardID: {eq: $id}}) {
+     categoryID,
+    flashCardID,
+    frontText,
+    backText,
+    frequency
+  }
+}

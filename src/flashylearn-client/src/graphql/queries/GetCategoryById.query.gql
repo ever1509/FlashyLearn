@@ -1,0 +1,6 @@
+query GetCategoryById( $id: UUID!) {
+  allCategories (where: {categoryID: {eq: $id}}) {
+    categoryID,
+    name
+  }
+}

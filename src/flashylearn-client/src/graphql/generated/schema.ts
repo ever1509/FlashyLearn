@@ -224,10 +224,24 @@ export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCategoriesQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'CategoryDto', categoryID: any, name: string }> };
 
+export type GetCategoryByIdQueryVariables = Exact<{
+  id: Scalars['UUID'];
+}>;
+
+
+export type GetCategoryByIdQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'CategoryDto', categoryID: any, name: string }> };
+
 export type RunFlashardsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RunFlashardsQuery = { __typename?: 'Query', runFlashCards: Array<{ __typename?: 'FlashCardDto', categoryID: any, flashCardID: any, frontText: string, backText: string, frequency: Frequency }> };
+
+export type RunFlashardByIdQueryVariables = Exact<{
+  id: Scalars['UUID'];
+}>;
+
+
+export type RunFlashardByIdQuery = { __typename?: 'Query', runFlashCards: Array<{ __typename?: 'FlashCardDto', categoryID: any, flashCardID: any, frontText: string, backText: string, frequency: Frequency }> };
 
 
 export const GetCategoriesDocument = gql`
@@ -265,6 +279,42 @@ export function useGetCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetCategoriesQueryHookResult = ReturnType<typeof useGetCategoriesQuery>;
 export type GetCategoriesLazyQueryHookResult = ReturnType<typeof useGetCategoriesLazyQuery>;
 export type GetCategoriesQueryResult = Apollo.QueryResult<GetCategoriesQuery, GetCategoriesQueryVariables>;
+export const GetCategoryByIdDocument = gql`
+    query GetCategoryById($id: UUID!) {
+  allCategories(where: {categoryID: {eq: $id}}) {
+    categoryID
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetCategoryByIdQuery__
+ *
+ * To run a query within a React component, call `useGetCategoryByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCategoryByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCategoryByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCategoryByIdQuery(baseOptions: Apollo.QueryHookOptions<GetCategoryByIdQuery, GetCategoryByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCategoryByIdQuery, GetCategoryByIdQueryVariables>(GetCategoryByIdDocument, options);
+      }
+export function useGetCategoryByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCategoryByIdQuery, GetCategoryByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCategoryByIdQuery, GetCategoryByIdQueryVariables>(GetCategoryByIdDocument, options);
+        }
+export type GetCategoryByIdQueryHookResult = ReturnType<typeof useGetCategoryByIdQuery>;
+export type GetCategoryByIdLazyQueryHookResult = ReturnType<typeof useGetCategoryByIdLazyQuery>;
+export type GetCategoryByIdQueryResult = Apollo.QueryResult<GetCategoryByIdQuery, GetCategoryByIdQueryVariables>;
 export const RunFlashardsDocument = gql`
     query RunFlashards {
   runFlashCards {
@@ -303,3 +353,42 @@ export function useRunFlashardsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type RunFlashardsQueryHookResult = ReturnType<typeof useRunFlashardsQuery>;
 export type RunFlashardsLazyQueryHookResult = ReturnType<typeof useRunFlashardsLazyQuery>;
 export type RunFlashardsQueryResult = Apollo.QueryResult<RunFlashardsQuery, RunFlashardsQueryVariables>;
+export const RunFlashardByIdDocument = gql`
+    query RunFlashardById($id: UUID!) {
+  runFlashCards(where: {flashCardID: {eq: $id}}) {
+    categoryID
+    flashCardID
+    frontText
+    backText
+    frequency
+  }
+}
+    `;
+
+/**
+ * __useRunFlashardByIdQuery__
+ *
+ * To run a query within a React component, call `useRunFlashardByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRunFlashardByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRunFlashardByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useRunFlashardByIdQuery(baseOptions: Apollo.QueryHookOptions<RunFlashardByIdQuery, RunFlashardByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RunFlashardByIdQuery, RunFlashardByIdQueryVariables>(RunFlashardByIdDocument, options);
+      }
+export function useRunFlashardByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RunFlashardByIdQuery, RunFlashardByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RunFlashardByIdQuery, RunFlashardByIdQueryVariables>(RunFlashardByIdDocument, options);
+        }
+export type RunFlashardByIdQueryHookResult = ReturnType<typeof useRunFlashardByIdQuery>;
+export type RunFlashardByIdLazyQueryHookResult = ReturnType<typeof useRunFlashardByIdLazyQuery>;
+export type RunFlashardByIdQueryResult = Apollo.QueryResult<RunFlashardByIdQuery, RunFlashardByIdQueryVariables>;

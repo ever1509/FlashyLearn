@@ -24,10 +24,14 @@ public class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryCommand
 
     public async Task<CategoryResponseDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
-        var newCategory = Category.Create(Guid.NewGuid(), request.Name, Guid.Parse(request.UserId));
+        var newCategory = new Category()
+        {
+           CategoryID = Guid.NewGuid(), 
+           Name = request.Name, 
+           UserID = Guid.Parse(request.UserId)
+        };
         
-        _repository.Create(newCategory);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _repository.Create(newCategory, cancellationToken);
 
         return new CategoryResponseDto()
         {

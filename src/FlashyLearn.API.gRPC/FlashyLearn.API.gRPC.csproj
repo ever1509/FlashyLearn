@@ -16,7 +16,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\flashylearn.proto" GrpcServices="Server" />
+        <Protobuf Include="Protos\category.proto" GrpcServices="Server">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Protobuf>
+        <Protobuf Include="Protos\flashcards.proto" GrpcServices="Server">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Protobuf>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Application\Application.csproj" />
+      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,18 @@
+syntax = "proto3";
+option csharp_namespace = "FlashyLearn.API.gRPC";
+
+
+service Category {
+  rpc GetAllCategories (GetAllCategoriesRequest) returns (GetAllCategoriesResponse);
+}
+
+message GetAllCategoriesRequest {}
+
+message GetAllCategoriesResponse {
+  repeated CategoryResponse categories = 1;
+}
+
+message CategoryResponse {
+  string categoryId = 1;
+  string name = 2;
+}

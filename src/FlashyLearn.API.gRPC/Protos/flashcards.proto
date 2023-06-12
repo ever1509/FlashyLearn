@@ -1,0 +1,23 @@
+syntax = "proto3";
+option csharp_namespace = "FlashyLearn.API.gRPC";
+
+
+service FlashCards {
+  rpc RunFlashCards (RunFlashCardsRequest) returns (RunFlashCardsResponse);
+}
+
+message RunFlashCardsRequest {
+  string userId = 1;
+}
+
+message RunFlashCardsResponse {
+  repeated FlashCardResponse flashCards = 1;
+}
+
+message FlashCardResponse{
+  string flashCardId = 1;
+  string frontText = 2;
+  string backText = 3;
+  int32 frequency = 4;
+  string categoryId = 5;
+}

@@ -9,7 +9,8 @@ var app = builder.Build();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
-    endpoints.MapGrpcService<FlashyLearnService>();
+    endpoints.MapGrpcService<CategoryService>();
+    endpoints.MapGrpcService<FlashCardService>();
 });
 
 

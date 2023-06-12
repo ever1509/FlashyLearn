@@ -5,6 +5,7 @@ import Layout from './Layout';
 import HomePage from '../../features/home/HomePage';
 import FlashCardDashboard from '../../features/flashcards/FlasCardDashboard';
 import CategoryPage from '../../features/categories/CategoryPage';
+import FlashCardPage from '../../features/flashcards/FlashCardPage';
 
 const client  = new ApolloClient({
   cache: new InMemoryCache({
@@ -23,6 +24,7 @@ function App() {
         <Route path="categories" element={<CategoriesDashboard />} />
         <Route path="categories/:categoryID" element={<CategoryPage />} />
         <Route path="flashcards" element={<FlashCardDashboard />} />
+        <Route path="flashcards/:flashCardID" element={<FlashCardPage />} />
         </Route>
       </Routes>
       </BrowserRouter>

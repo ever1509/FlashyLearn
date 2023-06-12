@@ -3,8 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CategoryDto, useGetCategoryByIdQuery } from "../../graphql/generated/schema";
 import OmLoading from "../../components/elements/OmLoading";
 import OmAlert from "../../components/elements/OmAlert";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid} from "@mui/material";
 import CategoryForm from "./categoryForms/CategoryForm";
+import OmHeader from "../../components/elements/OmHeader";
 
 export default function CategoryPage(){
     const params = useParams();
@@ -32,9 +33,7 @@ export default function CategoryPage(){
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
-                    <Typography component="div" variant="h5" display="block" gutterBottom align="center">
-                        Category Details
-                    </Typography>
+                    <OmHeader header="Category Details" />
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={12}>

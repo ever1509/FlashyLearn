@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './Layout';
 import HomePage from '../../features/home/HomePage';
 import FlashCardDashboard from '../../features/flashcards/FlasCardDashboard';
+import CategoryPage from '../../features/categories/CategoryPage';
 
 const client  = new ApolloClient({
   cache: new InMemoryCache({
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Layout />}> 
         <Route index element={<HomePage />}/>
         <Route path="categories" element={<CategoriesDashboard />} />
+        <Route path="categories/:categoryID" element={<CategoryPage />} />
         <Route path="flashcards" element={<FlashCardDashboard />} />
         </Route>
       </Routes>

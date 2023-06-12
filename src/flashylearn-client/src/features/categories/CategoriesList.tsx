@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { CategoryDto } from "../../graphql/generated/schema";
 import OmGrid from "../../components/elements/OmGrid";
-
+import { IconButton } from "@mui/material";
 
 export default function CategoriesList({categories}: CategoryListProps){
     const [columnsDefs] = useState([
@@ -9,7 +9,10 @@ export default function CategoriesList({categories}: CategoryListProps){
             field: 'categoryID',
             width: 400,
             supressSizeToFit:true,
-            title:'Category ID'
+            title:'Category ID',
+            cellRenderer: function(params: any){
+                return (<IconButton onClick={()=> window.open(`/categories/${params.value}`)} />)
+            }
         },
         {
             field: 'name',

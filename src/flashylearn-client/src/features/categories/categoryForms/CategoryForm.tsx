@@ -41,7 +41,7 @@ export default function CategoryForm({category}: CategoryFormProps){
                             <OmTextField name="name" otherProps={{label: "Category Name"}} />
                         </Grid>
                         <Grid item xs={6}>
-                            <OmSubmitButton otherProps={{}}>{"Create Category"}</OmSubmitButton>
+                            <OmSubmitButton otherProps={{}}>{ category.categoryID ? "Update Category" : "Create Category"}</OmSubmitButton>
                         </Grid>
                     </Grid>
                 </Form>

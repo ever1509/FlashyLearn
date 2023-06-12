@@ -34,7 +34,7 @@ export default function FlashCardPage(){
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
-                    <OmHeader header="FlashCard Details" />
+                    <OmHeader header={`FlashCard Details ${flashCard.flashCardID}`} />
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={12}>

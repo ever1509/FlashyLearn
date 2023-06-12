@@ -33,7 +33,7 @@ export default function CategoryPage(){
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={8}>
-                    <OmHeader header="Category Details" />
+                    <OmHeader header={`Category Details ${category.categoryID}`} />
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={12}>

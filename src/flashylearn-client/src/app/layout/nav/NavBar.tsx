@@ -20,16 +20,14 @@ export default function NavBar(){
                         textDecoration: 'none'
 
                     }}>
-                    <Link to="/">Flashy Learn App</Link>
+                    <Link className='text-link' to="/">FlashyLearn</Link>
                     </Typography>
                     <Box sx={{flexGrow:1, display:{xs:'none', md:'flex'}}}>
                         <Button key="Categories" sx={{my:2, color:'white', display:'block '}}>
-                            <Link to="/categories">Categories</Link>
+                            <Link className='text-link' to="/categories">Categories</Link>
                         </Button>
-                    </Box>
-                    <Box sx={{flexGrow:1, display:{xs:'none', md:'flex'}}}>
                         <Button key="FlashCards" sx={{my:2, color:'white', display:'block '}}>
-                            <Link to="/flashcards">FlasCards</Link>
+                            <Link className='text-link' to="/flashcards">FlasCards</Link>
                         </Button>
                     </Box>
                 </Toolbar>

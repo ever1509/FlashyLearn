@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { FlashCardDto, Frequency } from "../../../graphql/generated/schema";
+import { CategoryDto, FlashCardDto, Frequency, useGetCategoriesQuery } from "../../../graphql/generated/schema";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import { Container, Grid } from "@mui/material";
 import { Form, Formik } from "formik";
 import OmTextField from "../../../components/FormsUI/OmTextField";
 import OmSubmitButton from "../../../components/FormsUI/OmSubmitButton";
+import OmSelect from "../../../components/FormsUI/OmSelect";
 
 interface FlashCardFormProps{
     flashCard: FlashCardDto
@@ -24,6 +25,10 @@ export default function FlashCardForm({flashCard}: FlashCardFormProps){
 
 
     const [open, setOpen] = useState(false);
+
+    const {data: categoryData, loading: categoryLoading, error: categoryError} = useGetCategoriesQuery();
+    const categories = categoryData?.allCategories as CategoryDto[];
+
     const navigate = useNavigate();
 
     const INITIAL_FORM_STATE = {
@@ -42,19 +47,27 @@ export default function FlashCardForm({flashCard}: FlashCardFormProps){
             onSubmit={createFlashCard}>
                 <Form>
                     <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <OmTextField name="backText" otherProps={{label: "Back Text"}} />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <OmTextField name="frontText" otherProps={{label: "Front Text"}} />
                         </Grid>
-                        <Grid item xs={6}>
-                            <OmTextField name="frequency" otherProps={{label: "Frequency"}} />
+                        <Grid item xs={12}>
+                            <OmSelect 
+                                name="frequency"
+                                otherProps={{label: "Frequency"}}
+                                options={Frequency}
+                            />
                         </Grid>
-                        <Grid item xs={6}>
-                            <OmTextField name="categoryID" otherProps={{label: "Category"}} />
+                        <Grid item xs={12}>
+                        <OmSelect 
+                                name="categoryID"
+                                otherProps={{label: "Category"}}
+                                options={categories}
+                            />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <OmSubmitButton otherProps={{}}>{ flashCard.flashCardID ? "Update FlasCard" : "Create FlashCard"}</OmSubmitButton>
                         </Grid>
 

@@ -24,19 +24,24 @@ public class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryCommand
 
     public async Task<CategoryResponseDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
-        var newCategory = new Category()
+        if (Guid.TryParse(request.UserId, out var userId))
         {
-           CategoryID = Guid.NewGuid(), 
-           Name = request.Name, 
-           UserID = Guid.Parse(request.UserId)
-        };
+            var newCategory = new Category()
+            {
+                CategoryID = Guid.NewGuid(), 
+                Name = request.Name, 
+                UserID = userId
+            };
         
-        await _repository.Create(newCategory, cancellationToken);
+            await _repository.Create(newCategory, cancellationToken);
 
-        return new CategoryResponseDto()
-        {
-            CategoryId = newCategory.CategoryID,
-            Name = newCategory.Name
-        };
+            return new CategoryResponseDto()
+            {
+                CategoryId = newCategory.CategoryID,
+                Name = newCategory.Name
+            };
+        }
+
+        throw new Exception("Invalid userId");
     }
 }

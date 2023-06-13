@@ -7,6 +7,7 @@ namespace Application.Categories.Commands.CreateCategory;
 
 public class CreateCategoryCommand : IRequest<CategoryResponseDto>
 {
+    public string CategoryID { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public string? UserId { get; set; } = string.Empty;
 }

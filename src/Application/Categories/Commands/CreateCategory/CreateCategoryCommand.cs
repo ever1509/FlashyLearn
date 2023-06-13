@@ -25,24 +25,43 @@ public class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryCommand
 
     public async Task<CategoryResponseDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
-        if (Guid.TryParse(request.UserId, out var userId))
+        if (string.IsNullOrEmpty(request.CategoryID))
         {
-            var newCategory = new Category()
+            if (Guid.TryParse(request.UserId, out var userId))
             {
-                CategoryID = Guid.NewGuid(), 
-                Name = request.Name, 
-                UserID = userId
-            };
+                var newCategory = new Category()
+                {
+                    CategoryID = Guid.NewGuid(), 
+                    Name = request.Name, 
+                    UserID = userId
+                };
         
-            await _repository.Create(newCategory, cancellationToken);
+                await _repository.Create(newCategory, cancellationToken);
 
-            return new CategoryResponseDto()
-            {
-                CategoryId = newCategory.CategoryID,
-                Name = newCategory.Name
-            };
+                return new CategoryResponseDto()
+                {
+                    CategoryId = newCategory.CategoryID,
+                    Name = newCategory.Name
+                };
+            }
+
+            throw new Exception("Invalid userId");
         }
 
-        throw new Exception("Invalid userId");
+        if (Guid.TryParse(request.CategoryID, out var categoryId))
+        {
+            var category = await _repository.Get(x => x.CategoryID == categoryId, cancellationToken);
+            if (category is null)
+                throw new Exception("Invalid category Id");
+                
+            await _repository.UpdateAsync(categoryId, category, cancellationToken);
+            return new CategoryResponseDto()
+            {
+                CategoryId = category.CategoryID,
+                Name = category.Name
+            };
+        }
+        throw new Exception("Invalid categoryId");
+
     }
 }

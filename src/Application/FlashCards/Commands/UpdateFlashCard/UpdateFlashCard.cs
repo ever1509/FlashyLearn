@@ -32,8 +32,7 @@ public class UpdateFlashCardHandler : IRequestHandler<UpdateFlashCard, FlashCard
         if (entity is null)
             throw new Exception("Invalid ID");
 
-        entity.Update(request.FrontText, request.BackText, request.Frequency, Guid.Parse(request.CategoryId));
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _repository.UpdateAsync(Guid.Parse(request.Id), entity, cancellationToken);
 
         return new FlashCardResponseDto()
         {

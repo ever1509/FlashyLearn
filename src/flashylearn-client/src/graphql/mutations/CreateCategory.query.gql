@@ -1,0 +1,6 @@
+mutation CreateCategory($category: CreateCategoryCommandInput!) {
+  createCategory(command:$category){
+    categoryId,
+    name
+  }
+}

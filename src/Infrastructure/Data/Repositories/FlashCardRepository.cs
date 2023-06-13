@@ -16,7 +16,12 @@ public class FlashCardRepository : IFlashCardRepository
 
     public async Task<FlashCard?> Get(Expression<Func<FlashCard?, bool>> predicate, CancellationToken cancellationToken) =>
         await _context.Set<FlashCard>().FirstOrDefaultAsync(predicate, cancellationToken);
-    public async Task CreateAsync(FlashCard flashCard) => await _context.Set<FlashCard>().AddAsync(flashCard);
+
+    public async Task CreateAsync(FlashCard flashCard, CancellationToken cancellationToken)
+    {
+        await _context.AddAsync(flashCard, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
     public void Delete(FlashCard flashCard) => _context.Remove(flashCard);
 
     public async Task UpdateAsync(Guid id, FlashCard flashCard, CancellationToken cancellationToken)
@@ -25,7 +30,12 @@ public class FlashCardRepository : IFlashCardRepository
         if (entity is null)
             throw new Exception($"Not found flashcard with id {id}");
 
-        entity.Update(flashCard.FrontText, flashCard.BackText, flashCard.Frequency, flashCard.CategoryID);
+        entity.FrontText = flashCard.FrontText;
+        entity.BackText = flashCard.BackText;
+        entity.Frequency = flashCard.Frequency;
+        entity.CategoryID = flashCard.CategoryID;
+
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<List<FlashCardDto>> RunFlashCards(RunFlashCards request, CancellationToken cancellationToken)

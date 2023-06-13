@@ -7,6 +7,8 @@ import { Form, Formik } from "formik";
 import OmTextField from "../../../components/FormsUI/OmTextField";
 import OmSubmitButton from "../../../components/FormsUI/OmSubmitButton";
 import OmSelect from "../../../components/FormsUI/OmSelect";
+import OmLoading from "../../../components/elements/OmLoading";
+import OmAlert from "../../../components/elements/OmAlert";
 
 interface FlashCardFormProps{
     flashCard: FlashCardDto
@@ -23,13 +25,18 @@ export default function FlashCardForm({flashCard}: FlashCardFormProps){
         console.log(values);
     }
 
-
     const [open, setOpen] = useState(false);
-
-    const {data: categoryData, loading: categoryLoading, error: categoryError} = useGetCategoriesQuery();
-    const categories = categoryData?.allCategories as CategoryDto[];
-
     const navigate = useNavigate();
+
+
+    const {data: categoriesData, loading, error } = useGetCategoriesQuery();
+    if(loading){
+        return <OmLoading />
+    }
+
+    if(error || !categoriesData){
+        return <OmAlert message="Could not load categories data" />
+    }
 
     const INITIAL_FORM_STATE = {
         flashcarID: flashCard.flashCardID,
@@ -53,7 +60,7 @@ export default function FlashCardForm({flashCard}: FlashCardFormProps){
                         <Grid item xs={12}>
                             <OmTextField name="frontText" otherProps={{label: "Front Text"}} />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={8}>
                             <OmSelect 
                                 name="frequency"
                                 otherProps={{label: "Frequency"}}
@@ -64,7 +71,7 @@ export default function FlashCardForm({flashCard}: FlashCardFormProps){
                         <OmSelect 
                                 name="categoryID"
                                 otherProps={{label: "Category"}}
-                                options={categories}
+                                options={categoriesData.allCategories.map(category => (category.name))}
                             />
                         </Grid>
                         <Grid item xs={12}>

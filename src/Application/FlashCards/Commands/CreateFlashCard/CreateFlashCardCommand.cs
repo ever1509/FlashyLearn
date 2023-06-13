@@ -26,12 +26,18 @@ public class CreateFlashCardCommandHandler : IRequestHandler<CreateFlashCardComm
 
     public async Task<FlashCardResponseDto> Handle(CreateFlashCardCommand request, CancellationToken cancellationToken)
     {
-        var newFlashCard = FlashCard.Create(Guid.NewGuid(), request.FrontText, request.BackText,
-            Frequency.Monthly, Guid.Parse(request.CategoryID));
-
-        await _repository.CreateAsync(newFlashCard);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        if (!Guid.TryParse(request.CategoryID, out var categoryId)) throw new Exception("Invalid category Id");
+        
+        var newFlashCard = new FlashCard()
+        {
+            FlashCardID = Guid.NewGuid(),
+            FrontText = request.FrontText,
+            BackText = request.BackText,
+            Frequency = Frequency.Monthly,
+            CategoryID = categoryId
+        };
+            
+        await _repository.CreateAsync(newFlashCard, cancellationToken);
 
         return new FlashCardResponseDto()
         {

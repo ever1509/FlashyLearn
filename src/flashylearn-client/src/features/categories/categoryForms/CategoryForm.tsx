@@ -36,7 +36,7 @@ export default function CategoryForm({category}: CategoryFormProps){
         setOpen(false);
     }
 
-    async function createCategoryDetails(values: CreateCategoryCommandInput){
+    async function createOrUpdateCategoryDetails(values: CreateCategoryCommandInput){
         const response = await (createCategory({variables: {
             category: values
         }}));
@@ -70,7 +70,7 @@ export default function CategoryForm({category}: CategoryFormProps){
         <div>
             <Formik initialValues={INITIAL_FORM_STATE}
             validationSchema={FORM_VALIDATION}
-            onSubmit={createCategoryDetails}>
+            onSubmit={createOrUpdateCategoryDetails}>
                 <Form>
                     <Grid container spacing={2} >
                         <Grid item xs={6}>

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { CategoryDto, FlashCardDto, Frequency, useGetCategoriesQuery } from "../../../graphql/generated/schema";
+import { CreateFlashCardCommandInput, FlashCardDto, FlashCardResponseDto, Frequency, useCreateFlashCardMutation, useGetCategoriesQuery } from "../../../graphql/generated/schema";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
-import { Container, Grid } from "@mui/material";
+import { Alert, Container, Grid, Snackbar } from "@mui/material";
 import { Form, Formik } from "formik";
 import OmTextField from "../../../components/FormsUI/OmTextField";
 import OmSubmitButton from "../../../components/FormsUI/OmSubmitButton";
@@ -21,8 +21,38 @@ const FORM_VALIDATION = yup.object().shape({
 });
 
 export default function FlashCardForm({flashCard}: FlashCardFormProps){
-    function createFlashCard(values: any){
-        console.log(values);
+
+    const [createOrUpdateFlashCard, {loading: createOrUpdateFlashCardLoading, error: createOrUpdateFlashCardError}] = useCreateFlashCardMutation();
+
+    const handleClose = (event: any) => {
+        if(event.reason === 'clickaway'){
+            return;
+        }
+        setOpen(false);
+    }
+    
+    async function createOrUpdateFlashCardDetails(values: CreateFlashCardCommandInput){
+        const response = await createOrUpdateFlashCard({variables:{
+            flashCard: values
+        }});
+
+        setOpen(true);
+
+        const flashCard = response.data?.createFlashCard as FlashCardResponseDto;
+
+        if(flashCard.flashCardId){
+            navigate(`/flashcards/${flashCard.flashCardId}`);
+        }
+
+        if(createOrUpdateFlashCardLoading){
+            return (<OmLoading />)
+        }
+
+        if(createOrUpdateFlashCardError){
+            <Snackbar open={true} autoHideDuration={6000}>
+                <Alert security="error">Error Retrieving flashcard data</Alert>
+            </Snackbar>
+        }
     }
 
     const [open, setOpen] = useState(false);
@@ -47,11 +77,16 @@ export default function FlashCardForm({flashCard}: FlashCardFormProps){
     }
 
     return (<Container>
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success" sx={{width : '100%'}}>
+                {!flashCard.flashCardID ? "FlashCard successfully added!": "FlashCard successfully updated!"}
+            </Alert>
+        </Snackbar>
         <div>
             <Formik
             initialValues={INITIAL_FORM_STATE}
             validationSchema={FORM_VALIDATION}
-            onSubmit={createFlashCard}>
+            onSubmit={createOrUpdateFlashCardDetails}>
                 <Form>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>

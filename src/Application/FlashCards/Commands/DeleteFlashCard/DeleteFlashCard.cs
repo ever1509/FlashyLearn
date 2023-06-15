@@ -33,9 +33,10 @@ public class DeleteFlashCardHandler : IRequestHandler<DeleteFlashCard, FlashCard
 
         return new FlashCardResponseDto()
         {
-            FlashCardId = entity.FlashCardID,
+            FlashCardID = entity.FlashCardID,
             BackText = entity.BackText,
-            FrontText = entity.FrontText
+            FrontText = entity.FrontText,
+            CategoryID = entity.CategoryID
         };
     }
 }

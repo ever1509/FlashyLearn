@@ -2,6 +2,7 @@ mutation CreateFlashCard($flashCard: CreateFlashCardCommandInput!) {
   createFlashCard(command: $flashCard) {
     backText,
     frontText,
-    flashCardId
+    flashCardID,
+    categoryID
   }
 }

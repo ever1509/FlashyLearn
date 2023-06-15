@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Application.Common.Interfaces;
+using Application.FlashCards.Commands.CreateFlashCard;
 using Application.FlashCards.Dtos;
 using Application.FlashCards.Queries.RunFlashCards;
 using Dapper;
@@ -24,16 +25,15 @@ public class FlashCardRepository : IFlashCardRepository
     }
     public void Delete(FlashCard flashCard) => _context.Remove(flashCard);
 
-    public async Task UpdateAsync(Guid id, FlashCard flashCard, CancellationToken cancellationToken)
+    public async Task UpdateAsync(Guid id, CreateFlashCardCommand command, CancellationToken cancellationToken)
     {
-        var entity = await Get(x => x.FlashCardID == id, cancellationToken);
-        if (entity is null)
-            throw new Exception($"Not found flashcard with id {id}");
-
-        entity.FrontText = flashCard.FrontText;
-        entity.BackText = flashCard.BackText;
-        entity.Frequency = flashCard.Frequency;
-        entity.CategoryID = flashCard.CategoryID;
+        var flashCard = await Get(x => x.FlashCardID == id, cancellationToken);
+        if (flashCard is null)
+            throw new Exception("Invalid Flashcard Id");
+        flashCard.FrontText = command.FrontText;
+        flashCard.BackText = command.BackText;
+        flashCard.Frequency = command.Frequency;
+        flashCard.CategoryID = Guid.Parse(command.CategoryID);
 
         await _context.SaveChangesAsync(cancellationToken);
     }

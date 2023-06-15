@@ -24,7 +24,8 @@ export default function CategoryForm({category}: CategoryFormProps){
 
     const INITIAL_FORM_STATE = {
         categoryID: category.categoryID,
-        name: category.name || ''
+        name: category.name || '',
+        userID: category.userID
     }
 
     const [createCategory, {loading: createCategoryLoading, error: createCategoryError}] = useCreateCategoryMutation();
@@ -45,8 +46,8 @@ export default function CategoryForm({category}: CategoryFormProps){
 
         const category = response.data?.createCategory as CategoryResponseDto;
 
-        if(category.categoryId){
-            navigate(`/categories/${category.categoryId}`);
+        if(category.categoryID){
+            navigate(`/categories/${category.categoryID}`);
         }
 
         if(createCategoryLoading){

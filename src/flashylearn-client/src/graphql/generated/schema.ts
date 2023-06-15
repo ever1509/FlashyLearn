@@ -20,6 +20,7 @@ export type CategoryDto = {
   __typename?: 'CategoryDto';
   categoryID: Scalars['UUID'];
   name: Scalars['String'];
+  userID: Scalars['UUID'];
 };
 
 export type CategoryDtoFilterInput = {
@@ -27,22 +28,27 @@ export type CategoryDtoFilterInput = {
   categoryID?: InputMaybe<UuidOperationFilterInput>;
   name?: InputMaybe<StringOperationFilterInput>;
   or?: InputMaybe<Array<CategoryDtoFilterInput>>;
+  userID?: InputMaybe<UuidOperationFilterInput>;
 };
 
 export type CategoryResponseDto = {
   __typename?: 'CategoryResponseDto';
-  categoryId: Scalars['UUID'];
+  categoryID: Scalars['UUID'];
   name: Scalars['String'];
+  userID?: Maybe<Scalars['UUID']>;
 };
 
 export type CreateCategoryCommandInput = {
+  categoryID?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
-  userId?: InputMaybe<Scalars['String']>;
+  userID?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateFlashCardCommandInput = {
   backText: Scalars['String'];
   categoryID: Scalars['String'];
+  flashcarID?: InputMaybe<Scalars['String']>;
+  frequency: Frequency;
   frontText: Scalars['String'];
 };
 
@@ -76,7 +82,8 @@ export type FlashCardDtoFilterInput = {
 export type FlashCardResponseDto = {
   __typename?: 'FlashCardResponseDto';
   backText: Scalars['String'];
-  flashCardId: Scalars['UUID'];
+  categoryID: Scalars['UUID'];
+  flashCardID: Scalars['UUID'];
   frontText: Scalars['String'];
 };
 
@@ -114,7 +121,6 @@ export type Mutation = {
   createFlashCard: FlashCardResponseDto;
   deleteCategory: CategoryResponseDto;
   deleteFlashCard: FlashCardResponseDto;
-  updateFlashCard: FlashCardResponseDto;
 };
 
 
@@ -135,11 +141,6 @@ export type MutationDeleteCategoryArgs = {
 
 export type MutationDeleteFlashCardArgs = {
   command: DeleteFlashCardInput;
-};
-
-
-export type MutationUpdateFlashCardArgs = {
-  command: UpdateFlashCardInput;
 };
 
 export type Query = {
@@ -196,14 +197,6 @@ export type TagDtoFilterInput = {
   tagId?: InputMaybe<IntOperationFilterInput>;
 };
 
-export type UpdateFlashCardInput = {
-  backText: Scalars['String'];
-  categoryId: Scalars['String'];
-  frequency: Frequency;
-  frontText: Scalars['String'];
-  id: Scalars['String'];
-};
-
 export type UuidOperationFilterInput = {
   eq?: InputMaybe<Scalars['UUID']>;
   gt?: InputMaybe<Scalars['UUID']>;
@@ -224,26 +217,26 @@ export type CreateCategoryMutationVariables = Exact<{
 }>;
 
 
-export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory: { __typename?: 'CategoryResponseDto', categoryId: any, name: string } };
+export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory: { __typename?: 'CategoryResponseDto', categoryID: any, name: string, userID?: any | null } };
 
 export type CreateFlashCardMutationVariables = Exact<{
   flashCard: CreateFlashCardCommandInput;
 }>;
 
 
-export type CreateFlashCardMutation = { __typename?: 'Mutation', createFlashCard: { __typename?: 'FlashCardResponseDto', backText: string, frontText: string, flashCardId: any } };
+export type CreateFlashCardMutation = { __typename?: 'Mutation', createFlashCard: { __typename?: 'FlashCardResponseDto', backText: string, frontText: string, flashCardID: any, categoryID: any } };
 
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCategoriesQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'CategoryDto', categoryID: any, name: string }> };
+export type GetCategoriesQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'CategoryDto', categoryID: any, name: string, userID: any }> };
 
 export type GetCategoryByIdQueryVariables = Exact<{
   id: Scalars['UUID'];
 }>;
 
 
-export type GetCategoryByIdQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'CategoryDto', categoryID: any, name: string }> };
+export type GetCategoryByIdQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'CategoryDto', categoryID: any, name: string, userID: any }> };
 
 export type RunFlashardsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -261,8 +254,9 @@ export type RunFlashardByIdQuery = { __typename?: 'Query', runFlashCards: Array<
 export const CreateCategoryDocument = gql`
     mutation CreateCategory($category: CreateCategoryCommandInput!) {
   createCategory(command: $category) {
-    categoryId
+    categoryID
     name
+    userID
   }
 }
     `;
@@ -297,7 +291,8 @@ export const CreateFlashCardDocument = gql`
   createFlashCard(command: $flashCard) {
     backText
     frontText
-    flashCardId
+    flashCardID
+    categoryID
   }
 }
     `;
@@ -332,6 +327,7 @@ export const GetCategoriesDocument = gql`
   allCategories {
     categoryID
     name
+    userID
   }
 }
     `;
@@ -367,6 +363,7 @@ export const GetCategoryByIdDocument = gql`
   allCategories(where: {categoryID: {eq: $id}}) {
     categoryID
     name
+    userID
   }
 }
     `;

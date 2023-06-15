@@ -40,8 +40,8 @@ export default function FlashCardForm({flashCard}: FlashCardFormProps){
 
         const flashCard = response.data?.createFlashCard as FlashCardResponseDto;
 
-        if(flashCard.flashCardId){
-            navigate(`/flashcards/${flashCard.flashCardId}`);
+        if(flashCard.flashCardID){
+            navigate(`/flashcards/${flashCard.flashCardID}`);
         }
 
         if(createOrUpdateFlashCardLoading){

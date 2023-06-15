@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Application.Categories.Commands.CreateCategory;
 using Application.Categories.Dtos;
 using Application.Categories.Queries.AllCategories;
 using Application.Common.Interfaces;
@@ -20,31 +21,32 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<Category> Create(Category category, CancellationToken cancellationToken)
     {
-        await _context.AddAsync(category);
+        await _context.AddAsync(category, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         return category;
     }
 
     public void Delete(Category category) => _context.Remove(category);
 
-    public async Task UpdateAsync(Guid id, Category category, CancellationToken cancellationToken)
+    public async Task UpdateAsync(Guid id, CreateCategoryCommand command, CancellationToken cancellationToken)
     {
-        var entity = await Get(x => x.CategoryID == id, cancellationToken);
+        var category = await Get(x => x.CategoryID == id, cancellationToken);
+        if (category is null)
+            throw new Exception("Invalid category Id");
+        
+        category.Name = command.Name;
+        category.UserID = Guid.Parse(command.UserID);
 
-        if (entity is null)
-            throw new Exception($"Category not found with id {id}");
-
-        entity.Name = category.Name;
-        entity.UserID = category.UserID;
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<List<CategoryDto>> GetCategories(AllCategories request, CancellationToken cancellationToken)
     {
         var categoryDtoList = new List<CategoryDto>();
         if (request.UserId is null)
-            categoryDtoList = (await _context.Database.GetDbConnection().QueryAsync<CategoryDto>(@$"SELECT ""CategoryID"", ""Name"" FROM ""Category""")).ToList();
+            categoryDtoList = (await _context.Database.GetDbConnection().QueryAsync<CategoryDto>(@$"SELECT ""CategoryID"", ""Name"", ""UserID"" FROM ""Category""")).ToList();
         else
-            categoryDtoList = (await _context.Database.GetDbConnection().QueryAsync<CategoryDto>(@$"SELECT ""CategoryID"", ""Name"" FROM ""Category"" WHERE ""UserId""=@UserID", new {UserID = request.UserId})).ToList();
+            categoryDtoList = (await _context.Database.GetDbConnection().QueryAsync<CategoryDto>(@$"SELECT ""CategoryID"", ""Name"" FROM ""Category"", ""UserID"" WHERE ""UserId""=@UserID", new {UserID = request.UserId})).ToList();
 
         return await Task.FromResult(categoryDtoList
             .Skip((request.PageNumber -1)* request.PageSize)

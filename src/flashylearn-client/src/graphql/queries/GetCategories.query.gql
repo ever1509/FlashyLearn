@@ -1,6 +1,7 @@
 query GetCategories {
   allCategories {
     categoryID,
-    name
+    name,
+    userID
   }
 }

@@ -32,8 +32,9 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
 
         return new CategoryResponseDto()
         {
-            CategoryId = entity.CategoryID,
-            Name = entity.Name
+            CategoryID = entity.CategoryID,
+            Name = entity.Name,
+            UserID = entity.UserID
         };
     }
 }

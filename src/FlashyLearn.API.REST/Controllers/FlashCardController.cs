@@ -1,9 +1,7 @@
 using Application.FlashCards.Commands.CreateFlashCard;
 using Application.FlashCards.Commands.DeleteFlashCard;
-using Application.FlashCards.Commands.UpdateFlashCard;
 using Application.FlashCards.Dtos;
 using Application.FlashCards.Queries.RunFlashCards;
-using Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,20 +26,6 @@ public class FlashCardController : ControllerBase
     
     [HttpPost]
     public async Task<IActionResult> CreateFlashCard([FromBody] CreateFlashCardCommand command)
-    {
-        try
-        {        
-            await _mediator.Send(command);
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
-    
-    [HttpPut()]
-    public async Task<IActionResult> UpdateFlashCard([FromBody] UpdateFlashCard command)
     {
         try
         {        

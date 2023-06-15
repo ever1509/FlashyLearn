@@ -1,8 +1,8 @@
 import { Grid, Typography } from "@mui/material";
-import { FlashCardDto, useRunFlashardsQuery } from "../../graphql/generated/schema";
+import { FlashCardDto, useRunFlashardsQuery } from "../../../graphql/generated/schema";
 import FlashCardList from "./FlashCardList";
-import OmAlert from "../../components/elements/OmAlert";
-import OmLoading from "../../components/elements/OmLoading";
+import OmAlert from "../../../components/elements/OmAlert";
+import OmLoading from "../../../components/elements/OmLoading";
 
 export default function FlashCardDashboard(){
     const {data: flashCardsData, loading, error } = useRunFlashardsQuery();

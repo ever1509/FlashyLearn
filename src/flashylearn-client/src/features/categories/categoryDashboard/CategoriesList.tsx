@@ -1,7 +1,8 @@
 import { useState } from "react"
-import { CategoryDto } from "../../graphql/generated/schema";
-import OmGrid from "../../components/elements/OmGrid";
-import {Link } from "@mui/material";
+import { CategoryDto } from "../../../graphql/generated/schema";
+import OmGrid from "../../../components/elements/OmGrid";
+import {Button, Container, Grid, Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function CategoriesList({categories}: CategoryListProps){
     const [columnsDefs] = useState([
@@ -22,10 +23,16 @@ export default function CategoriesList({categories}: CategoryListProps){
     ]);
 
     return (
-        <OmGrid 
+        <Container>
+            <Grid item spacing={12}>
+            <Button variant='contained' fullWidth={true} href={"/categories/new"}>Add New Category</Button>
+            </Grid>
+            <OmGrid 
             rowData={categories}
             columnsDefs={columnsDefs}
-        />)
+        />           
+        </Container>
+        )
 }
 
 interface CategoryListProps {

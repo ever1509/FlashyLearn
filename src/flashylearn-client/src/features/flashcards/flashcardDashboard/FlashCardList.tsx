@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { FlashCardDto } from "../../graphql/generated/schema"
-import OmGrid from "../../components/elements/OmGrid";
-import { Link } from "@mui/material";
+import { FlashCardDto } from "../../../graphql/generated/schema"
+import OmGrid from "../../../components/elements/OmGrid";
+import { Button, Container, Grid, Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface FlashCardProps{
     flashCards: FlashCardDto[]
@@ -45,8 +46,14 @@ export default function FlashCardList({flashCards}: FlashCardProps){
         }
     ]);
 
-    return ( <OmGrid 
+    return ( 
+        <Container>
+            <Grid item spacing={12}>
+            <Button variant='contained' fullWidth={true} href={"/flashcards/new"}>Add New FlashCard</Button>
+            </Grid>
+            <OmGrid 
         rowData={flashCards}
-        columnsDefs={columnsDefs}
-    />)
+        columnsDefs={columnsDefs}/>
+        </Container>
+        )
 }

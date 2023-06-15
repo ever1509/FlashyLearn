@@ -1,8 +1,8 @@
 import { Grid, Typography } from "@mui/material";
-import { CategoryDto, useGetCategoriesQuery } from "../../graphql/generated/schema";
+import { CategoryDto, useGetCategoriesQuery } from "../../../graphql/generated/schema";
 import CategoriesList from "./CategoriesList";
-import OmLoading from "../../components/elements/OmLoading";
-import OmAlert from "../../components/elements/OmAlert";
+import OmLoading from "../../../components/elements/OmLoading";
+import OmAlert from "../../../components/elements/OmAlert";
 export default function CategoriesDashboard(){
     const {data: categoriesData, loading, error } = useGetCategoriesQuery();
     if(loading){

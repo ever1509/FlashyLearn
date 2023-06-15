@@ -28,8 +28,7 @@ public class DeleteFlashCardHandler : IRequestHandler<DeleteFlashCard, FlashCard
         if (entity is null)
             throw new Exception("Invalid ID");
 
-        _repository.Delete(entity);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        _repository.Delete(entity, cancellationToken);
 
         return new FlashCardResponseDto()
         {

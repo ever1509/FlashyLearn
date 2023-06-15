@@ -1,0 +1,9 @@
+mutation DeleteCategory($id: String!) {
+  deleteCategory(command: {
+    id:$id
+  }) {
+   categoryID,
+   name,
+   userID 
+  }
+}

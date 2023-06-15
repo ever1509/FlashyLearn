@@ -10,7 +10,7 @@ public interface IFlashCardRepository
 {
     Task<FlashCard?> Get(Expression<Func<FlashCard?, bool>> predicate, CancellationToken cancellationToken);
     Task CreateAsync(FlashCard flashCard, CancellationToken cancellationToken);
-    void Delete(FlashCard flashCard);
+    Task Delete(FlashCard flashCard, CancellationToken cancellationToken);
     Task UpdateAsync(Guid id, CreateFlashCardCommand command, CancellationToken cancellationToken);
     Task<List<FlashCardDto>> RunFlashCards(RunFlashCards request, CancellationToken cancellationToken);
 }

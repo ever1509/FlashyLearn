@@ -23,7 +23,12 @@ public class FlashCardRepository : IFlashCardRepository
         await _context.AddAsync(flashCard, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
     }
-    public void Delete(FlashCard flashCard) => _context.Remove(flashCard);
+
+    public async Task Delete(FlashCard flashCard, CancellationToken cancellationToken)
+    {
+        _context.Remove(flashCard);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 
     public async Task UpdateAsync(Guid id, CreateFlashCardCommand command, CancellationToken cancellationToken)
     {

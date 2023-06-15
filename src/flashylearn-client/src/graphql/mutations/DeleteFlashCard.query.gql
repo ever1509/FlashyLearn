@@ -1,0 +1,10 @@
+mutation DeleteFlashCard($id:String!){
+  deleteFlashCard(command: {
+    id:$id
+  }) {
+   categoryID,
+   flashCardID,
+   backText,
+   frontText
+  }
+}

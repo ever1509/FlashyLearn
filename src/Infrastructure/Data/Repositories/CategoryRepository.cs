@@ -26,7 +26,11 @@ public class CategoryRepository : ICategoryRepository
         return category;
     }
 
-    public void Delete(Category category) => _context.Remove(category);
+    public async Task Delete(Category category, CancellationToken cancellationToken)
+    {
+        _context.Remove(category);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 
     public async Task UpdateAsync(Guid id, CreateCategoryCommand command, CancellationToken cancellationToken)
     {

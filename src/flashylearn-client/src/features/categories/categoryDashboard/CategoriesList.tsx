@@ -24,13 +24,17 @@ export default function CategoriesList({categories}: CategoryListProps){
 
     return (
         <Container>
-            <Grid item spacing={12}>
+            <Grid container spacing={2}>
+            <Grid item xs={12}>
             <Button variant='contained' fullWidth={true} href={"/categories/new"}>Add New Category</Button>
             </Grid>
+            <Grid item xs={12}>
             <OmGrid 
             rowData={categories}
             columnsDefs={columnsDefs}
-        />           
+        />      
+            </Grid>     
+        </Grid>
         </Container>
         )
 }

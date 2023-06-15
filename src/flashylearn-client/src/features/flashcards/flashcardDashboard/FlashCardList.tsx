@@ -48,12 +48,16 @@ export default function FlashCardList({flashCards}: FlashCardProps){
 
     return ( 
         <Container>
-            <Grid item spacing={12}>
+            <Grid container spacing={2}>
+            <Grid item xs={12}>
             <Button variant='contained' fullWidth={true} href={"/flashcards/new"}>Add New FlashCard</Button>
             </Grid>
+            <Grid item xs={12}>
             <OmGrid 
         rowData={flashCards}
         columnsDefs={columnsDefs}/>
+            </Grid>
+            </Grid>
         </Container>
         )
 }

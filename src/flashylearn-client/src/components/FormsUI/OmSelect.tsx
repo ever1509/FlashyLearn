@@ -20,6 +20,7 @@ export default function OmSelect({name, options, otherProps}: OmSelectProps){
         ...field, 
         ...otherProps,
         select: true,
+        fullWidth: true,
         variant: 'outlined',
         onChange: handleChange
     }

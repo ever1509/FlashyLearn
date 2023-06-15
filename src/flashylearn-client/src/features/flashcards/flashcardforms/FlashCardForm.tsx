@@ -95,7 +95,7 @@ export default function FlashCardForm({flashCard}: FlashCardFormProps){
                         <Grid item xs={12}>
                             <OmTextField name="frontText" otherProps={{label: "Front Text"}} />
                         </Grid>
-                        <Grid item xs={8}>
+                        <Grid item xs={12}>
                             <OmSelect 
                                 name="frequency"
                                 otherProps={{label: "Frequency"}}

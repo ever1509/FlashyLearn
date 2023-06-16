@@ -1,6 +1,6 @@
 mutation DeleteCategory($id: String!) {
   deleteCategory(command: {
-    id:$id
+    id: $id
   }) {
    categoryID,
    name,

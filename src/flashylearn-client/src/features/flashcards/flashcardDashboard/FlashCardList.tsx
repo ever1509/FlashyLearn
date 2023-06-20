@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FlashCardDto } from "../../../graphql/generated/schema"
 import OmGrid from "../../../components/elements/OmGrid";
-import { Button, Container, Grid, Link } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Button, Container, Grid } from "@mui/material";
+import { More } from "@mui/icons-material";
 
 interface FlashCardProps{
     flashCards: FlashCardDto[]
@@ -16,8 +16,8 @@ export default function FlashCardList({flashCards}: FlashCardProps){
             supressSizeToFit:true,
             title:'FlashCard ID',
             cellRenderer: function(params: any){
-                return (<Link onClick={()=> window.open(`/flashcards/${params.value}`)}>{params.value}
-                </Link>)
+                return (<Button variant="outlined" color="primary" startIcon={<More />} 
+                onClick={()=> window.open(`/flashcards/${params.value}`)}></Button>)
             }
         },
         {

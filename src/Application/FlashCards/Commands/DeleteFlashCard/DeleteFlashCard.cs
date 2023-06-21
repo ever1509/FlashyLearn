@@ -12,12 +12,10 @@ public class DeleteFlashCard : IRequest<FlashCardResponseDto>
 public class DeleteFlashCardHandler : IRequestHandler<DeleteFlashCard, FlashCardResponseDto>
 {
     private readonly IFlashCardRepository _repository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteFlashCardHandler(IFlashCardRepository repository, IUnitOfWork unitOfWork)
+    public DeleteFlashCardHandler(IFlashCardRepository repository)
     {
         _repository = repository;
-        _unitOfWork = unitOfWork;
     }
 
     public async Task<FlashCardResponseDto> Handle(DeleteFlashCard request, CancellationToken cancellationToken)
@@ -28,7 +26,7 @@ public class DeleteFlashCardHandler : IRequestHandler<DeleteFlashCard, FlashCard
         if (entity is null)
             throw new Exception("Invalid ID");
 
-        _repository.Delete(entity, cancellationToken);
+        await _repository.Delete(entity, cancellationToken);
 
         return new FlashCardResponseDto()
         {

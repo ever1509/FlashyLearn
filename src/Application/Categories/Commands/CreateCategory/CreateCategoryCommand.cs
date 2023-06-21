@@ -15,17 +15,15 @@ public class CreateCategoryCommand : IRequest<CategoryResponseDto>
 public class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryCommand, CategoryResponseDto>
 {
     private readonly ICategoryRepository _repository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateCategoryCommandHandler(ICategoryRepository repository, IUnitOfWork unitOfWork)
+    public CreateCategoryCommandHandler(ICategoryRepository repository)
     {
         _repository = repository;
-        _unitOfWork = unitOfWork;
     }
 
     public async Task<CategoryResponseDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
-        if (!Guid.TryParse(request.UserID, out var userId)) throw new Exception("Invalid userId");
+        var userId = !string.IsNullOrEmpty(request.UserID) ? Guid.Parse(request.UserID) : Guid.Empty;
         
         if (string.IsNullOrEmpty(request.CategoryID))
         {

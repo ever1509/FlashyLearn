@@ -18,12 +18,10 @@ public class CreateFlashCardCommand : IRequest<FlashCardResponseDto>
 public class CreateFlashCardCommandHandler : IRequestHandler<CreateFlashCardCommand, FlashCardResponseDto>
 {
     private readonly IFlashCardRepository _repository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateFlashCardCommandHandler(IFlashCardRepository repository, IUnitOfWork unitOfWork)
+    public CreateFlashCardCommandHandler(IFlashCardRepository repository)
     {
         _repository = repository;
-        _unitOfWork = unitOfWork;
     }
 
     public async Task<FlashCardResponseDto> Handle(CreateFlashCardCommand request, CancellationToken cancellationToken)

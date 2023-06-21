@@ -12,12 +12,10 @@ public class DeleteCategoryCommand: IRequest<CategoryResponseDto>
 public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, CategoryResponseDto>
 {
     private readonly ICategoryRepository _repository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteCategoryCommandHandler(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork)
+    public DeleteCategoryCommandHandler(ICategoryRepository categoryRepository)
     {
         _repository = categoryRepository;
-        _unitOfWork = unitOfWork;
     }
 
     public async Task<CategoryResponseDto> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)

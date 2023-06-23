@@ -36,6 +36,9 @@
       <_ContentIncludedByDefault Remove="wwwroot\static\js\main.5a5127b4.js" />
       <_ContentIncludedByDefault Remove="wwwroot\static\js\main.5a5127b4.js.LICENSE.txt" />
       <_ContentIncludedByDefault Remove="wwwroot\static\js\main.5a5127b4.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\js\main.942df9bd.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\js\main.942df9bd.js.LICENSE.txt" />
+      <_ContentIncludedByDefault Remove="wwwroot\static\js\main.942df9bd.js.map" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Application.Common.Interfaces;
-using Application.FlashCards.Commands.CreateFlashCard;
+using Application.FlashCards.Commands.SaveFlashCard;
 using Application.FlashCards.Dtos;
 using Application.FlashCards.Queries.RunFlashCards;
 using Dapper;
@@ -30,7 +30,7 @@ public class FlashCardRepository : IFlashCardRepository
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(Guid id, CreateFlashCardCommand command, CancellationToken cancellationToken)
+    public async Task UpdateAsync(Guid id, SaveFlashCardCommand command, CancellationToken cancellationToken)
     {
         var flashCard = await Get(x => x.FlashCardID == id, cancellationToken);
         if (flashCard is null)

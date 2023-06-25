@@ -1,5 +1,4 @@
 using Application.Common.Interfaces;
-using Application.Tags.Commands.CreateTag;
 using Application.Tags.Dtos;
 using Application.Tags.Queries.AllTags;
 using Dapper;

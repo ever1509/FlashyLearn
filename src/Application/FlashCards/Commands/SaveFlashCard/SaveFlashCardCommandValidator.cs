@@ -1,8 +1,8 @@
 using FluentValidation;
 
-namespace Application.FlashCards.Commands.CreateFlashCard;
+namespace Application.FlashCards.Commands.SaveFlashCard;
 
-public class CreateFlashCardCommandValidator: AbstractValidator<CreateFlashCardCommand>
+public class CreateFlashCardCommandValidator: AbstractValidator<SaveFlashCardCommand>
 {
     public CreateFlashCardCommandValidator()
     {

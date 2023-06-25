@@ -4,9 +4,9 @@ using Domain.Entities;
 using Domain.Enums;
 using MediatR;
 
-namespace Application.FlashCards.Commands.CreateFlashCard;
+namespace Application.FlashCards.Commands.SaveFlashCard;
 
-public class CreateFlashCardCommand : IRequest<FlashCardResponseDto>
+public class SaveFlashCardCommand : IRequest<FlashCardResponseDto>
 {
     public string? FlashcarID { get; set; } = string.Empty;
     public Frequency Frequency { get; set; }
@@ -15,16 +15,16 @@ public class CreateFlashCardCommand : IRequest<FlashCardResponseDto>
     public string CategoryID { get; set; } = string.Empty;
 }
 
-public class CreateFlashCardCommandHandler : IRequestHandler<CreateFlashCardCommand, FlashCardResponseDto>
+public class SaveFlashCardCommandHandler : IRequestHandler<SaveFlashCardCommand, FlashCardResponseDto>
 {
     private readonly IFlashCardRepository _repository;
 
-    public CreateFlashCardCommandHandler(IFlashCardRepository repository)
+    public SaveFlashCardCommandHandler(IFlashCardRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<FlashCardResponseDto> Handle(CreateFlashCardCommand request, CancellationToken cancellationToken)
+    public async Task<FlashCardResponseDto> Handle(SaveFlashCardCommand request, CancellationToken cancellationToken)
     {
         if (!Guid.TryParse(request.CategoryID, out var categoryId)) throw new Exception("Invalid category Id");
 

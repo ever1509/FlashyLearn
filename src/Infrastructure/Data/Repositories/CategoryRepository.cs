@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using Application.Categories.Commands.CreateCategory;
+using Application.Categories.Commands.SaveCategory;
 using Application.Categories.Dtos;
 using Application.Categories.Queries.AllCategories;
 using Application.Common.Interfaces;
@@ -32,7 +32,7 @@ public class CategoryRepository : ICategoryRepository
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(Guid id, CreateCategoryCommand command, CancellationToken cancellationToken)
+    public async Task UpdateAsync(Guid id, SaveCategoryCommand command, CancellationToken cancellationToken)
     {
         var category = await Get(x => x.CategoryID == id, cancellationToken);
         if (category is null)

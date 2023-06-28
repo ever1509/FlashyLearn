@@ -7,28 +7,35 @@ namespace Application.Tags.Commands.SaveTag;
 public class SaveTagCommand : IRequest<TagResponseDto>
 {
     public string Description { get; set; } = string.Empty;
+    public string? TagID { get; set; } = string.Empty;
 }
 
 public class SaveTagCommandHandler : IRequestHandler<SaveTagCommand, TagResponseDto>
 {
     private readonly ITagRepository _repository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public SaveTagCommandHandler(ITagRepository repository, IUnitOfWork unitOfWork)
+    public SaveTagCommandHandler(ITagRepository repository)
     {
         _repository = repository;
-        _unitOfWork = unitOfWork;
     }
 
     public async Task<TagResponseDto> Handle(SaveTagCommand request, CancellationToken cancellationToken)
     {
-        var tagResponseDto = await _repository.CreateTag(new Tag
+        if (string.IsNullOrEmpty(request.TagID))
         {
-            Description = request.Description,
-        }, cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return tagResponseDto;
+            return await _repository.CreateTag(new Tag
+            {
+                Description = request.Description,
+            }, cancellationToken);   
+        }
+        
+        if (!Guid.TryParse(request.TagID, out var tagId)) throw new Exception("Invalid tagId");
+        
+        await _repository.UpdateAsync(tagId, request, cancellationToken);
+        return new TagResponseDto
+        {
+            TagId = tagId,
+            Description = request.Description
+        };
     }
 }

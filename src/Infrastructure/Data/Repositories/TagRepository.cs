@@ -1,4 +1,6 @@
+using System.Linq.Expressions;
 using Application.Common.Interfaces;
+using Application.Tags.Commands.SaveTag;
 using Application.Tags.Dtos;
 using Application.Tags.Queries.AllTags;
 using Dapper;
@@ -14,6 +16,9 @@ public class TagRepository: ITagRepository
     {
         _context = context;
     }
+    
+    public async Task<Tag?> Get(Expression<Func<Tag?, bool>> predicate, CancellationToken cancellationToken) =>
+        await _context.Set<Tag>().FirstOrDefaultAsync(predicate, cancellationToken);
 
     public async Task<List<TagDto>> GetTags(AllTags request, CancellationToken cancellationToken)
     {
@@ -42,5 +47,14 @@ public class TagRepository: ITagRepository
             TagId = entity.TagID,
             Description = entity.Description
         };
+    }
+
+    public async Task UpdateAsync(Guid tagId, SaveTagCommand request, CancellationToken cancellationToken)
+    {
+        var tag = await Get(x => x.TagID == tagId, cancellationToken);
+        if (tag is null)
+            throw new Exception("Invalid Tag Id");
+        tag.Description = request.Description;
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

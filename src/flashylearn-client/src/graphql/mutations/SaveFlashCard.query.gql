@@ -1,0 +1,8 @@
+mutation SaveFlashCard($flashCard: SaveFlashCardCommandInput!) {
+  saveFlashCard(command: $flashCard) {
+    backText,
+    frontText,
+    flashCardID,
+    categoryID
+  }
+}

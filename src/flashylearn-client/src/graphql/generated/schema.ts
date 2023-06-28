@@ -38,20 +38,6 @@ export type CategoryResponseDto = {
   userID?: Maybe<Scalars['UUID']>;
 };
 
-export type CreateCategoryCommandInput = {
-  categoryID?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  userID?: InputMaybe<Scalars['String']>;
-};
-
-export type CreateFlashCardCommandInput = {
-  backText: Scalars['String'];
-  categoryID: Scalars['String'];
-  flashcarID?: InputMaybe<Scalars['String']>;
-  frequency: Frequency;
-  frontText: Scalars['String'];
-};
-
 export type DeleteCategoryCommandInput = {
   id: Scalars['String'];
 };
@@ -117,20 +103,10 @@ export type IntOperationFilterInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createCategory: CategoryResponseDto;
-  createFlashCard: FlashCardResponseDto;
   deleteCategory: CategoryResponseDto;
   deleteFlashCard: FlashCardResponseDto;
-};
-
-
-export type MutationCreateCategoryArgs = {
-  command: CreateCategoryCommandInput;
-};
-
-
-export type MutationCreateFlashCardArgs = {
-  command: CreateFlashCardCommandInput;
+  saveCategory: CategoryResponseDto;
+  saveFlashCard: FlashCardResponseDto;
 };
 
 
@@ -141,6 +117,16 @@ export type MutationDeleteCategoryArgs = {
 
 export type MutationDeleteFlashCardArgs = {
   command: DeleteFlashCardInput;
+};
+
+
+export type MutationSaveCategoryArgs = {
+  command: SaveCategoryCommandInput;
+};
+
+
+export type MutationSaveFlashCardArgs = {
+  command: SaveFlashCardCommandInput;
 };
 
 export type Query = {
@@ -167,6 +153,20 @@ export type QueryAllTagsArgs = {
 
 export type QueryRunFlashCardsArgs = {
   where?: InputMaybe<FlashCardDtoFilterInput>;
+};
+
+export type SaveCategoryCommandInput = {
+  categoryID?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  userID?: InputMaybe<Scalars['String']>;
+};
+
+export type SaveFlashCardCommandInput = {
+  backText: Scalars['String'];
+  categoryID: Scalars['String'];
+  flashcarID?: InputMaybe<Scalars['String']>;
+  frequency: Frequency;
+  frontText: Scalars['String'];
 };
 
 export type StringOperationFilterInput = {
@@ -212,20 +212,6 @@ export type UuidOperationFilterInput = {
   nlte?: InputMaybe<Scalars['UUID']>;
 };
 
-export type CreateCategoryMutationVariables = Exact<{
-  category: CreateCategoryCommandInput;
-}>;
-
-
-export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory: { __typename?: 'CategoryResponseDto', categoryID: any, name: string, userID?: any | null } };
-
-export type CreateFlashCardMutationVariables = Exact<{
-  flashCard: CreateFlashCardCommandInput;
-}>;
-
-
-export type CreateFlashCardMutation = { __typename?: 'Mutation', createFlashCard: { __typename?: 'FlashCardResponseDto', backText: string, frontText: string, flashCardID: any, categoryID: any } };
-
 export type DeleteCategoryMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -239,6 +225,20 @@ export type DeleteFlashCardMutationVariables = Exact<{
 
 
 export type DeleteFlashCardMutation = { __typename?: 'Mutation', deleteFlashCard: { __typename?: 'FlashCardResponseDto', categoryID: any, flashCardID: any, backText: string, frontText: string } };
+
+export type CreateCategoryMutationVariables = Exact<{
+  category: SaveCategoryCommandInput;
+}>;
+
+
+export type CreateCategoryMutation = { __typename?: 'Mutation', saveCategory: { __typename?: 'CategoryResponseDto', categoryID: any, name: string, userID?: any | null } };
+
+export type SaveFlashCardMutationVariables = Exact<{
+  flashCard: SaveFlashCardCommandInput;
+}>;
+
+
+export type SaveFlashCardMutation = { __typename?: 'Mutation', saveFlashCard: { __typename?: 'FlashCardResponseDto', backText: string, frontText: string, flashCardID: any, categoryID: any } };
 
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -265,77 +265,6 @@ export type RunFlashardByIdQueryVariables = Exact<{
 export type RunFlashardByIdQuery = { __typename?: 'Query', runFlashCards: Array<{ __typename?: 'FlashCardDto', categoryID: any, flashCardID: any, frontText: string, backText: string, frequency: Frequency }> };
 
 
-export const CreateCategoryDocument = gql`
-    mutation CreateCategory($category: CreateCategoryCommandInput!) {
-  createCategory(command: $category) {
-    categoryID
-    name
-    userID
-  }
-}
-    `;
-export type CreateCategoryMutationFn = Apollo.MutationFunction<CreateCategoryMutation, CreateCategoryMutationVariables>;
-
-/**
- * __useCreateCategoryMutation__
- *
- * To run a mutation, you first call `useCreateCategoryMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateCategoryMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createCategoryMutation, { data, loading, error }] = useCreateCategoryMutation({
- *   variables: {
- *      category: // value for 'category'
- *   },
- * });
- */
-export function useCreateCategoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateCategoryMutation, CreateCategoryMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateCategoryMutation, CreateCategoryMutationVariables>(CreateCategoryDocument, options);
-      }
-export type CreateCategoryMutationHookResult = ReturnType<typeof useCreateCategoryMutation>;
-export type CreateCategoryMutationResult = Apollo.MutationResult<CreateCategoryMutation>;
-export type CreateCategoryMutationOptions = Apollo.BaseMutationOptions<CreateCategoryMutation, CreateCategoryMutationVariables>;
-export const CreateFlashCardDocument = gql`
-    mutation CreateFlashCard($flashCard: CreateFlashCardCommandInput!) {
-  createFlashCard(command: $flashCard) {
-    backText
-    frontText
-    flashCardID
-    categoryID
-  }
-}
-    `;
-export type CreateFlashCardMutationFn = Apollo.MutationFunction<CreateFlashCardMutation, CreateFlashCardMutationVariables>;
-
-/**
- * __useCreateFlashCardMutation__
- *
- * To run a mutation, you first call `useCreateFlashCardMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateFlashCardMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createFlashCardMutation, { data, loading, error }] = useCreateFlashCardMutation({
- *   variables: {
- *      flashCard: // value for 'flashCard'
- *   },
- * });
- */
-export function useCreateFlashCardMutation(baseOptions?: Apollo.MutationHookOptions<CreateFlashCardMutation, CreateFlashCardMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateFlashCardMutation, CreateFlashCardMutationVariables>(CreateFlashCardDocument, options);
-      }
-export type CreateFlashCardMutationHookResult = ReturnType<typeof useCreateFlashCardMutation>;
-export type CreateFlashCardMutationResult = Apollo.MutationResult<CreateFlashCardMutation>;
-export type CreateFlashCardMutationOptions = Apollo.BaseMutationOptions<CreateFlashCardMutation, CreateFlashCardMutationVariables>;
 export const DeleteCategoryDocument = gql`
     mutation DeleteCategory($id: String!) {
   deleteCategory(command: {id: $id}) {
@@ -407,6 +336,77 @@ export function useDeleteFlashCardMutation(baseOptions?: Apollo.MutationHookOpti
 export type DeleteFlashCardMutationHookResult = ReturnType<typeof useDeleteFlashCardMutation>;
 export type DeleteFlashCardMutationResult = Apollo.MutationResult<DeleteFlashCardMutation>;
 export type DeleteFlashCardMutationOptions = Apollo.BaseMutationOptions<DeleteFlashCardMutation, DeleteFlashCardMutationVariables>;
+export const CreateCategoryDocument = gql`
+    mutation CreateCategory($category: SaveCategoryCommandInput!) {
+  saveCategory(command: $category) {
+    categoryID
+    name
+    userID
+  }
+}
+    `;
+export type CreateCategoryMutationFn = Apollo.MutationFunction<CreateCategoryMutation, CreateCategoryMutationVariables>;
+
+/**
+ * __useCreateCategoryMutation__
+ *
+ * To run a mutation, you first call `useCreateCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCategoryMutation, { data, loading, error }] = useCreateCategoryMutation({
+ *   variables: {
+ *      category: // value for 'category'
+ *   },
+ * });
+ */
+export function useCreateCategoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateCategoryMutation, CreateCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCategoryMutation, CreateCategoryMutationVariables>(CreateCategoryDocument, options);
+      }
+export type CreateCategoryMutationHookResult = ReturnType<typeof useCreateCategoryMutation>;
+export type CreateCategoryMutationResult = Apollo.MutationResult<CreateCategoryMutation>;
+export type CreateCategoryMutationOptions = Apollo.BaseMutationOptions<CreateCategoryMutation, CreateCategoryMutationVariables>;
+export const SaveFlashCardDocument = gql`
+    mutation SaveFlashCard($flashCard: SaveFlashCardCommandInput!) {
+  saveFlashCard(command: $flashCard) {
+    backText
+    frontText
+    flashCardID
+    categoryID
+  }
+}
+    `;
+export type SaveFlashCardMutationFn = Apollo.MutationFunction<SaveFlashCardMutation, SaveFlashCardMutationVariables>;
+
+/**
+ * __useSaveFlashCardMutation__
+ *
+ * To run a mutation, you first call `useSaveFlashCardMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveFlashCardMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveFlashCardMutation, { data, loading, error }] = useSaveFlashCardMutation({
+ *   variables: {
+ *      flashCard: // value for 'flashCard'
+ *   },
+ * });
+ */
+export function useSaveFlashCardMutation(baseOptions?: Apollo.MutationHookOptions<SaveFlashCardMutation, SaveFlashCardMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveFlashCardMutation, SaveFlashCardMutationVariables>(SaveFlashCardDocument, options);
+      }
+export type SaveFlashCardMutationHookResult = ReturnType<typeof useSaveFlashCardMutation>;
+export type SaveFlashCardMutationResult = Apollo.MutationResult<SaveFlashCardMutation>;
+export type SaveFlashCardMutationOptions = Apollo.BaseMutationOptions<SaveFlashCardMutation, SaveFlashCardMutationVariables>;
 export const GetCategoriesDocument = gql`
     query GetCategories {
   allCategories {

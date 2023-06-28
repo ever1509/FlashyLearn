@@ -1,0 +1,7 @@
+mutation CreateCategory($category: SaveCategoryCommandInput!) {
+  saveCategory(command:$category){
+    categoryID,
+    name,
+    userID
+  }
+}

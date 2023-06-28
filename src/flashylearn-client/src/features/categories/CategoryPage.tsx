@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CategoryDto, useDeleteCategoryMutation, useGetCategoryByIdQuery } from "../../graphql/generated/schema";
 import OmLoading from "../../components/elements/OmLoading";
 import OmAlert from "../../components/elements/OmAlert";

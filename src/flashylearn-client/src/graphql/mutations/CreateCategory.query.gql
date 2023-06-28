@@ -1,7 +1,0 @@
-mutation CreateCategory($category: CreateCategoryCommandInput!) {
-  createCategory(command:$category){
-    categoryID,
-    name,
-    userID
-  }
-}

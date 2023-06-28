@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CreateFlashCardCommandInput, FlashCardDto, FlashCardResponseDto, Frequency, useCreateFlashCardMutation, useGetCategoriesQuery } from "../../../graphql/generated/schema";
+import { SaveFlashCardCommandInput, FlashCardDto, FlashCardResponseDto, Frequency, useSaveFlashCardMutation, useGetCategoriesQuery } from "../../../graphql/generated/schema";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Grid, Snackbar } from "@mui/material";
@@ -22,7 +22,7 @@ const FORM_VALIDATION = yup.object().shape({
 
 export default function FlashCardForm({flashCard}: FlashCardFormProps){
 
-    const [createOrUpdateFlashCard, {loading: createOrUpdateFlashCardLoading, error: createOrUpdateFlashCardError}] = useCreateFlashCardMutation();
+    const [createOrUpdateFlashCard, {loading: createOrUpdateFlashCardLoading, error: createOrUpdateFlashCardError}] = useSaveFlashCardMutation();
 
     const handleClose = (event: any) => {
         if(event.reason === 'clickaway'){
@@ -31,14 +31,14 @@ export default function FlashCardForm({flashCard}: FlashCardFormProps){
         setOpen(false);
     }
     
-    async function createOrUpdateFlashCardDetails(values: CreateFlashCardCommandInput){
+    async function createOrUpdateFlashCardDetails(values: SaveFlashCardCommandInput){
         const response = await createOrUpdateFlashCard({variables:{
             flashCard: values
         }});
 
         setOpen(true);
 
-        const flashCard = response.data?.createFlashCard as FlashCardResponseDto;
+        const flashCard = response.data?.saveFlashCard as FlashCardResponseDto;
 
         if(flashCard.flashCardID){
             navigate(`/flashcards/${flashCard.flashCardID}`);

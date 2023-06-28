@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CategoryDto, CategoryResponseDto, CreateCategoryCommandInput, useCreateCategoryMutation } from "../../../graphql/generated/schema";
+import { CategoryDto, CategoryResponseDto, SaveCategoryCommandInput, useCreateCategoryMutation } from "../../../graphql/generated/schema";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Grid, Snackbar } from "@mui/material";
@@ -7,7 +7,6 @@ import { Form, Formik } from "formik";
 import OmTextField from "../../../components/FormsUI/OmTextField";
 import OmSubmitButton from "../../../components/FormsUI/OmSubmitButton";
 import OmLoading from "../../../components/elements/OmLoading";
-import OmAlert from "../../../components/elements/OmAlert";
 
 interface CategoryFormProps{
     category: CategoryDto
@@ -37,14 +36,14 @@ export default function CategoryForm({category}: CategoryFormProps){
         setOpen(false);
     }
 
-    async function createOrUpdateCategoryDetails(values: CreateCategoryCommandInput){
+    async function createOrUpdateCategoryDetails(values: SaveCategoryCommandInput){
         const response = await (createCategory({variables: {
             category: values
         }}));
 
         setOpen(true);
 
-        const category = response.data?.createCategory as CategoryResponseDto;
+        const category = response.data?.saveCategory as CategoryResponseDto;
 
         if(category.categoryID){
             navigate(`/categories/${category.categoryID}`);

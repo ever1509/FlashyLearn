@@ -4,6 +4,9 @@ using Application.Categories.Dtos;
 using Application.FlashCards.Commands.DeleteFlashCard;
 using Application.FlashCards.Commands.SaveFlashCard;
 using Application.FlashCards.Dtos;
+using Application.Tags.Commands.DeleteTag;
+using Application.Tags.Commands.SaveTag;
+using Application.Tags.Dtos;
 using MediatR;
 
 namespace Infrastructure.GraphQL;
@@ -18,4 +21,8 @@ public class Mutation
     
     public async Task<FlashCardResponseDto> DeleteFlashCard([Service] IMediator mediator, DeleteFlashCard command) => await mediator.Send(command);
     
+    public async Task<TagResponseDto> SaveTag([Service] IMediator mediator, SaveTagCommand command) => await mediator.Send(command);
+    
+    public async Task<TagResponseDto> DeleteTag([Service] IMediator mediator, DeleteTagCommand command) => await mediator.Send(command);
+
 }

@@ -1,0 +1,6 @@
+query AllTags($flashCardID: String!) {
+  allTags(flashCardId: $flashCardID){
+    tagId,
+    name
+  }
+}

@@ -252,6 +252,13 @@ export type GetCategoryByIdQueryVariables = Exact<{
 
 export type GetCategoryByIdQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'CategoryDto', categoryID: any, name: string, userID: any }> };
 
+export type AllTagsQueryVariables = Exact<{
+  flashCardID: Scalars['String'];
+}>;
+
+
+export type AllTagsQuery = { __typename?: 'Query', allTags: Array<{ __typename?: 'TagDto', tagId: number, name: string }> };
+
 export type RunFlashardsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -480,6 +487,42 @@ export function useGetCategoryByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetCategoryByIdQueryHookResult = ReturnType<typeof useGetCategoryByIdQuery>;
 export type GetCategoryByIdLazyQueryHookResult = ReturnType<typeof useGetCategoryByIdLazyQuery>;
 export type GetCategoryByIdQueryResult = Apollo.QueryResult<GetCategoryByIdQuery, GetCategoryByIdQueryVariables>;
+export const AllTagsDocument = gql`
+    query AllTags($flashCardID: String!) {
+  allTags(flashCardId: $flashCardID) {
+    tagId
+    name
+  }
+}
+    `;
+
+/**
+ * __useAllTagsQuery__
+ *
+ * To run a query within a React component, call `useAllTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllTagsQuery({
+ *   variables: {
+ *      flashCardID: // value for 'flashCardID'
+ *   },
+ * });
+ */
+export function useAllTagsQuery(baseOptions: Apollo.QueryHookOptions<AllTagsQuery, AllTagsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllTagsQuery, AllTagsQueryVariables>(AllTagsDocument, options);
+      }
+export function useAllTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllTagsQuery, AllTagsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllTagsQuery, AllTagsQueryVariables>(AllTagsDocument, options);
+        }
+export type AllTagsQueryHookResult = ReturnType<typeof useAllTagsQuery>;
+export type AllTagsLazyQueryHookResult = ReturnType<typeof useAllTagsLazyQuery>;
+export type AllTagsQueryResult = Apollo.QueryResult<AllTagsQuery, AllTagsQueryVariables>;
 export const RunFlashardsDocument = gql`
     query RunFlashards {
   runFlashCards {

@@ -46,6 +46,10 @@ export type DeleteFlashCardInput = {
   id: Scalars['String'];
 };
 
+export type DeleteTagCommandInput = {
+  tagId: Scalars['String'];
+};
+
 export type FlashCardDto = {
   __typename?: 'FlashCardDto';
   backText: Scalars['String'];
@@ -105,8 +109,10 @@ export type Mutation = {
   __typename?: 'Mutation';
   deleteCategory: CategoryResponseDto;
   deleteFlashCard: FlashCardResponseDto;
+  deleteTag: TagResponseDto;
   saveCategory: CategoryResponseDto;
   saveFlashCard: FlashCardResponseDto;
+  saveTag: TagResponseDto;
 };
 
 
@@ -120,6 +126,11 @@ export type MutationDeleteFlashCardArgs = {
 };
 
 
+export type MutationDeleteTagArgs = {
+  command: DeleteTagCommandInput;
+};
+
+
 export type MutationSaveCategoryArgs = {
   command: SaveCategoryCommandInput;
 };
@@ -127,6 +138,11 @@ export type MutationSaveCategoryArgs = {
 
 export type MutationSaveFlashCardArgs = {
   command: SaveFlashCardCommandInput;
+};
+
+
+export type MutationSaveTagArgs = {
+  command: SaveTagCommandInput;
 };
 
 export type Query = {
@@ -169,6 +185,11 @@ export type SaveFlashCardCommandInput = {
   frontText: Scalars['String'];
 };
 
+export type SaveTagCommandInput = {
+  description: Scalars['String'];
+  tagID?: InputMaybe<Scalars['String']>;
+};
+
 export type StringOperationFilterInput = {
   and?: InputMaybe<Array<StringOperationFilterInput>>;
   contains?: InputMaybe<Scalars['String']>;
@@ -195,6 +216,12 @@ export type TagDtoFilterInput = {
   name?: InputMaybe<StringOperationFilterInput>;
   or?: InputMaybe<Array<TagDtoFilterInput>>;
   tagId?: InputMaybe<IntOperationFilterInput>;
+};
+
+export type TagResponseDto = {
+  __typename?: 'TagResponseDto';
+  description: Scalars['String'];
+  tagId: Scalars['UUID'];
 };
 
 export type UuidOperationFilterInput = {
@@ -239,6 +266,13 @@ export type SaveFlashCardMutationVariables = Exact<{
 
 
 export type SaveFlashCardMutation = { __typename?: 'Mutation', saveFlashCard: { __typename?: 'FlashCardResponseDto', backText: string, frontText: string, flashCardID: any, categoryID: any } };
+
+export type SaveTagMutationVariables = Exact<{
+  tag: SaveTagCommandInput;
+}>;
+
+
+export type SaveTagMutation = { __typename?: 'Mutation', saveTag: { __typename?: 'TagResponseDto', tagId: any, description: string } };
 
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -414,6 +448,40 @@ export function useSaveFlashCardMutation(baseOptions?: Apollo.MutationHookOption
 export type SaveFlashCardMutationHookResult = ReturnType<typeof useSaveFlashCardMutation>;
 export type SaveFlashCardMutationResult = Apollo.MutationResult<SaveFlashCardMutation>;
 export type SaveFlashCardMutationOptions = Apollo.BaseMutationOptions<SaveFlashCardMutation, SaveFlashCardMutationVariables>;
+export const SaveTagDocument = gql`
+    mutation SaveTag($tag: SaveTagCommandInput!) {
+  saveTag(command: $tag) {
+    tagId
+    description
+  }
+}
+    `;
+export type SaveTagMutationFn = Apollo.MutationFunction<SaveTagMutation, SaveTagMutationVariables>;
+
+/**
+ * __useSaveTagMutation__
+ *
+ * To run a mutation, you first call `useSaveTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveTagMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveTagMutation, { data, loading, error }] = useSaveTagMutation({
+ *   variables: {
+ *      tag: // value for 'tag'
+ *   },
+ * });
+ */
+export function useSaveTagMutation(baseOptions?: Apollo.MutationHookOptions<SaveTagMutation, SaveTagMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveTagMutation, SaveTagMutationVariables>(SaveTagDocument, options);
+      }
+export type SaveTagMutationHookResult = ReturnType<typeof useSaveTagMutation>;
+export type SaveTagMutationResult = Apollo.MutationResult<SaveTagMutation>;
+export type SaveTagMutationOptions = Apollo.BaseMutationOptions<SaveTagMutation, SaveTagMutationVariables>;
 export const GetCategoriesDocument = gql`
     query GetCategories {
   allCategories {

@@ -1,0 +1,6 @@
+mutation SaveTag($tag: SaveTagCommandInput!) {
+  saveTag(command: $tag){
+    tagId,
+    description
+  }
+}

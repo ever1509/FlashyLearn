@@ -11,11 +11,7 @@ public class GraphqlTests
     [Fact]
     public async Task SchemaChangeTest()
     {
-        var schema = await new ServiceCollection()
-            .AddGraphQLServer()
-            .AddQueryType<Query>()
-            .AddFiltering()
-            .BuildSchemaAsync();
+        var schema = await TestServices.Executor.GetSchemaAsync(default);
         
         schema.ToString().MatchSnapshot();
     }
@@ -23,15 +19,11 @@ public class GraphqlTests
     [Fact]
     public async Task FetchAllCategories()
     {
-        var result = await new ServiceCollection()
-            .AddGraphQLServer()
-            .AddQueryType<Query>()
-            .AddFiltering()
-            .ExecuteRequestAsync(@"  allCategories {
+        var result =await TestServices.ExecuteRequestAsync(b=> b.SetQuery( @"  allCategories {
                                                 categoryID,
                                                 name,
                                                 userID
-                                            }");
-        result.ToJson().MatchSnapshot();
+                                            }"));
+        result.MatchSnapshot();
     }
 }

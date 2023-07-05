@@ -1,0 +1,116 @@
+﻿schema {
+  query: Query
+}
+
+type CategoryDto {
+  categoryID: UUID!
+  name: String!
+  userID: UUID!
+}
+
+type FlashCardDto {
+  flashCardID: UUID!
+  frontText: String!
+  backText: String!
+  frequency: Frequency!
+  categoryID: UUID!
+}
+
+type Query {
+  allCategories(page: Int! = 1 pageSize: Int! = 10 userId: String where: CategoryDtoFilterInput): [CategoryDto!]!
+  allTags(flashCardId: String where: TagDtoFilterInput): [TagDto!]!
+  runFlashCards(where: FlashCardDtoFilterInput): [FlashCardDto!]!
+}
+
+type TagDto {
+  tagId: Int!
+  name: String!
+}
+
+input CategoryDtoFilterInput {
+  and: [CategoryDtoFilterInput!]
+  or: [CategoryDtoFilterInput!]
+  categoryID: UuidOperationFilterInput
+  name: StringOperationFilterInput
+  userID: UuidOperationFilterInput
+}
+
+input FlashCardDtoFilterInput {
+  and: [FlashCardDtoFilterInput!]
+  or: [FlashCardDtoFilterInput!]
+  flashCardID: UuidOperationFilterInput
+  frontText: StringOperationFilterInput
+  backText: StringOperationFilterInput
+  frequency: FrequencyOperationFilterInput
+  categoryID: UuidOperationFilterInput
+}
+
+input FrequencyOperationFilterInput {
+  eq: Frequency
+  neq: Frequency
+  in: [Frequency!]
+  nin: [Frequency!]
+}
+
+input IntOperationFilterInput {
+  eq: Int
+  neq: Int
+  in: [Int]
+  nin: [Int]
+  gt: Int
+  ngt: Int
+  gte: Int
+  ngte: Int
+  lt: Int
+  nlt: Int
+  lte: Int
+  nlte: Int
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input TagDtoFilterInput {
+  and: [TagDtoFilterInput!]
+  or: [TagDtoFilterInput!]
+  tagId: IntOperationFilterInput
+  name: StringOperationFilterInput
+}
+
+input UuidOperationFilterInput {
+  eq: UUID
+  neq: UUID
+  in: [UUID]
+  nin: [UUID]
+  gt: UUID
+  ngt: UUID
+  gte: UUID
+  ngte: UUID
+  lt: UUID
+  nlt: UUID
+  lte: UUID
+  nlte: UUID
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+"The `@specifiedBy` directive is used within the type system definition language to provide a URL for specifying the behavior of custom scalar definitions."
+directive @specifiedBy("The specifiedBy URL points to a human-readable specification. This field will only read a result for scalar types." url: String!) on SCALAR
+
+scalar UUID @specifiedBy(url: "https:\/\/tools.ietf.org\/html\/rfc4122")

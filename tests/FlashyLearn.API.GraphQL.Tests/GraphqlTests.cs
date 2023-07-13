@@ -26,4 +26,17 @@ public class GraphqlTests
                                             }"));
         result.MatchSnapshot();
     }
+
+    [Fact]
+    public async Task FetchRunFlashCards()
+    {
+        var result =await TestServices.ExecuteRequestAsync(b=> b.SetQuery( @"  runFlashCards{
+                                                categoryID,
+                                                flashCardID,
+                                                frontText,
+                                                backText,
+                                                frequency
+                                              }"));
+        result.MatchSnapshot();
+    }
 }
